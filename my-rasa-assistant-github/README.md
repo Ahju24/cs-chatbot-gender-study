@@ -6,10 +6,10 @@ This repository contains the source code and Docker configurations to replicate 
 
 ## Table of Contents
 
-1. [Prerequisites](#-prerequisites)
-2. [Project Structure](#-project-structure)
-3. [Quick Start (Local Deployment)](#-quick-start-local-deployment)
-4. [Production Deployment (GitHub Pages + GCP)](#-production-deployment-github-pages-gcp) 
+1. [Prerequisites](#prerequisites)
+2. [Project Structure](#project-structure)
+3. [Quick Start (Local Deployment)](#quick-start-local-deployment)
+4. [Production Deployment (GitHub Pages + GCP)](#production-deployment-github-pages--gcp) 
 
 ---
 
