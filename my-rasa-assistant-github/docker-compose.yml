@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+
+  rasa:
+    build: .  # This looks for your Dockerfile
+    volumes:
+      - .:/app
+    command:
+      - run
+      - --endpoints
+      - endpoints.yml
+      - --enable-api
+      - --debug
+
+  assistant:
+    image: europe-west3-docker.pkg.dev/rasa-releases/rasa-pro/rasa-pro:3.15.10
+    volumes:
+      - .:/app
+    command:
+      - run
+      - --enable-api
+      - --cors
+      - "*"
+      - --endpoints
+      - endpoints.yml
+      - --debug
+    ports:
+      - '5005:5005'
+    env_file:
+      - .env
+    user: root
+
+  action_server:
+    image: europe-west3-docker.pkg.dev/rasa-releases/rasa-pro/rasa-pro:3.15.10
+    volumes:
+      - ./actions:/app/actions
+      - ./endpoints.yml:/app/endpoints.yml
+    command:
+      - 'run'
+      - 'actions'
+    ports:
+      - '5055:5055'
+    env_file:
+      - .env
+    user: root
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+
+

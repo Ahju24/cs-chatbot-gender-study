@@ -1,0 +1,1314 @@
+version: "3.1"
+
+slots:
+  user_group:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: controlled
+  linguistic_condition:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: controlled
+  user_id:
+    type: text
+    mappings:
+      - type: controlled
+  user_name:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_llm
+  user_name_emp_gs:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_llm
+  user_name_emp_gn:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_llm
+  user_name_neu_gs:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_llm
+
+
+  gender_title_emp:
+    type: text
+    mappings:
+      - type: from_llm
+  gender_title_neu:
+    type: text
+    mappings:
+      - type: from_llm
+
+  initial_self_assessment_emp_gs:
+    type: float
+    min_value: 1
+    max_value: 10
+    mappings:
+      - type: controlled
+  initial_self_assessment_emp_gn:
+    type: float
+    min_value: 1
+    max_value: 10
+    mappings:
+      - type: controlled
+  initial_self_assessment_neu_gs:
+    type: float
+    min_value: 1
+    max_value: 10
+    mappings:
+      - type: controlled
+  initial_self_assessment_neu_gn:
+    type: float
+    min_value: 1
+    max_value: 10
+    mappings:
+      - type: controlled
+  user_level:
+    type: categorical
+    values:
+      - low
+      - med
+      - high
+    mappings:
+      - type: controlled
+
+
+  recursion_familiarity_emp:
+    type: categorical
+    values:
+      - no experience
+      - experience
+    mappings:
+      - type: from_llm
+  recursion_familiarity_neu:
+    type: categorical
+    values:
+      - no experience
+      - experience
+    mappings:
+      - type: from_llm
+
+  example_emp_gs:
+    type: text
+  example_emp_gn:
+    type: text
+  example_neu_gs:
+    type: text
+  example_neu_gn:
+    type: text
+
+  recursion_MC_quiz_emp_gs:
+    type: categorical
+    values:
+      - word[0] != word[len - 1]
+      - len == 0 or 1
+      - new_word = word[1:len - 2]
+      - len == 0 or 1 AND word[0] != word[len - 1]
+    mappings:
+      - type: controlled
+  recursion_MC_quiz_emp_gn:
+    type: categorical
+    values:
+      - word[0] != word[len - 1]
+      - len == 0 or 1
+      - new_word = word[1:len - 2]
+      - len == 0 or 1 AND word[0] != word[len - 1]
+    mappings:
+      - type: controlled
+  recursion_MC_quiz_neu_gs:
+    type: categorical
+    values:
+      - word[0] != word[len - 1]
+      - len == 0 or 1
+      - new_word = word[1:len - 2]
+      - len == 0 or 1 AND word[0] != word[len - 1]
+    mappings:
+      - type: controlled
+  recursion_MC_quiz_neu_gn:
+    type: categorical
+    values:
+      - word[0] != word[len - 1]
+      - len == 0 or 1
+      - new_word = word[1:len - 2]
+      - len == 0 or 1 AND word[0] != word[len - 1]
+    mappings:
+      - type: controlled
+
+  task_hanoi:
+    type: text
+    mappings:
+      - type: controlled
+  task_hanoi_emp_gs:
+    type: text
+    mappings:
+      - type: controlled
+  task_hanoi_emp_gn:
+    type: text
+    mappings:
+      - type: controlled
+  task_hanoi_neu_gs:
+    type: text
+    mappings:
+      - type: controlled
+  task_hanoi_neu_gn:
+    type: text
+    mappings:
+      - type: controlled
+  user_wants_hint:
+    type: bool
+    mappings:
+      - type: controlled
+  user_wants_hint_emp:
+    type: bool
+    mappings:
+      - type: controlled
+  user_wants_hint_neu:
+    type: bool
+    mappings:
+      - type: controlled
+
+  user_answer_emp:
+    type: text
+    mappings:
+      - type: from_llm
+        #action: action_fill_user_answer_emp
+  user_answer_neu:
+    type: text
+    mappings:
+      - type: from_llm
+        #action: action_fill_user_answer_neu
+  answer_format_error:
+    type: bool
+    initial_value: false
+    mappings:
+      - type: controlled
+
+  number_wrong_slot:
+    type: float
+    min_value: 0
+    max_value: 6
+    mappings:
+      - type: controlled
+  which_slots_were_wrong:
+    type: text
+    mappings:
+      - type: controlled
+
+  user_wants_solution_emp:
+    type: bool
+    mappings:
+      - type: controlled
+  user_wants_solution_neu:
+    type: bool
+    mappings:
+      - type: controlled
+  user_wants_solution:
+    type: bool
+    mappings:
+      - type: controlled
+  wants_additional_solution_explanation:
+    type: bool
+    mappings:
+      - type: controlled
+  wants_additional_solution_explanation_emp:
+    type: bool
+    mappings:
+      - type: controlled
+  wants_additional_solution_explanation_neu:
+    type: bool
+    mappings:
+      - type: controlled
+  additional_information_understood:
+    type: bool
+    mappings:
+      - type: controlled
+  additional_information_understood_emp:
+    type: bool
+    mappings:
+      - type: controlled
+  additional_information_understood_neu:
+    type: bool
+    mappings:
+      - type: controlled
+
+  final_self_assessment_emp_gs:
+    type: float
+    min_value: 1
+    max_value: 10
+    mappings:
+      - type: controlled
+  final_self_assessment_emp_gn:
+    type: float
+    min_value: 1
+    max_value: 10
+    mappings:
+      - type: controlled
+  final_self_assessment_neu_gs:
+    type: float
+    min_value: 1
+    max_value: 10
+    mappings:
+      - type: controlled
+  final_self_assessment_neu_gn:
+    type: float
+    min_value: 1
+    max_value: 10
+    mappings:
+      - type: controlled
+
+  self_reflection_emp:
+    type: categorical
+    values:
+      - no reflection wanted
+      - positive reflection
+      - neutral reflection
+      - negative reflection
+    mappings:
+      - type: from_llm
+  evaluation_neu:
+    type: text
+    mappings:
+      - type: from_llm
+  self_reflection_wo_condition:
+    type: categorical
+    values:
+      - no reflection wanted
+      - positive reflection
+      - neutral reflection
+      - negative reflection
+    mappings:
+      - type: from_llm
+  improvement_suggestions:
+    type: categorical
+    values:
+      - suggestions provided
+      - no suggestions
+    mappings:
+      - type: from_llm
+
+actions:
+  - action_session_start
+  - action_assign_condition
+  - action_set_user_name_emp
+  - action_set_user_name_neu
+  - action_fill_gender_title_emp
+  - action_fill_gender_title_neu
+  - action_evaluate_user_answer
+  - action_fill_user_answer_emp
+  - action_fill_user_answer_neu
+  - action_fill_evaluation_neu
+
+responses:
+  utter_welcome:
+    - text: "Hi!"
+  utter_welcome_emp:
+    - text: "Hi! I am Coment, your coding mentor. I am excited to help you today!"
+  utter_welcome_n:
+    - text: "Hello. I am Coment. I will be assisting you with the mentoring session today."
+  utter_ask_user_name:
+    - text: "What is your name?"
+  utter_ask_user_name_emp_gs:
+    - text: "I'd like to address you formally. Would you mind sharing your surname with me?"
+  utter_ask_user_name_emp_gn:
+    - text: "I'd like to address you personally, so what should I call you?"
+  utter_ask_user_name_neu_gs:
+    - text: "For the purpose of formal addressing, please enter your surname."
+
+  utter_explain_name_purpose:
+    - text: "I will only use your name to personalize the session!"
+
+  utter_personalized_greeting_emp_gs_mr:
+    - text: "Hello, Mr. {user_name}! It's a pleasure to meet you!"
+  utter_personalized_greeting_emp_gs_ms:
+    - text: "Hello, Ms. {user_name}! It's a pleasure to meet you!"
+  utter_personalized_greeting_emp_gs:
+    - text: "Hello, {user_name}! It's a pleasure to meet you!"
+  utter_personalized_greeting_emp_gn:
+    - text: "Hello, {user_name}! It's a pleasure to meet you!"
+  utter_personalized_greeting_neu_gs_mr:
+    - text: "Hello, Mr. {user_name}. Welcome to the mentoring session."
+  utter_personalized_greeting_neu_gs_ms:
+    - text: "Hello, Ms. {user_name}. Welcome to the mentoring session."
+  utter_personalized_greeting_neu_gs:
+    - text: "Hello, {user_name}. Welcome to the mentoring session."
+
+
+  utter_ask_gender_title_emp:
+    - text: "I'd love to be respectful, would you prefer Mr. or Ms.?"
+  utter_ask_gender_title_neu:
+    - text: "Do you prefer Mr. or Ms.?"
+
+  utter_intro_emp_gs:
+    - text: "I know programming can be challenging, especially for novice programmers, {gender_title_emp} {user_name}. Many people struggle with understanding these concepts as they require a high level of abstraction, but we’ll figure it out together!"
+  utter_intro_emp_gn:
+    - text: "I know programming can be challenging, especially for those just starting out, {user_name}. Many people struggle with understanding these concepts as they require a high level of abstraction, but we’ll figure it out together!"
+  utter_intro_neu_gs:
+    - text: "Programming involves complex logic, {gender_title_neu} {user_name}. Many people struggle to understand programming concepts due to the high level of abstraction required."
+  utter_intro_neu_gn:
+    - text: "Programming involves complex logic. Many people struggle to understand programming concepts due to the high level of abstraction required."
+  utter_intro_without_condition:
+    - text: "Programming involves complex logic. Many people struggle to understand programming concepts because they require a high level of abstraction."
+
+  utter_ask_initial_self_assessment_emp_gs:
+    - text: "To make the mentoring session as effective as possible, I have an initial question for you: As a programmer, how confident do you currently feel in programming on a scale from 1 (not confident at all) to 10 (extremely confident)?"
+      buttons:
+        - title: "1"
+          payload: "/SetSlots(initial_self_assessment_emp_gs=1)"
+        - title: "2"
+          payload: "/SetSlots(initial_self_assessment_emp_gs=2)"
+        - title: "3"
+          payload: "/SetSlots(initial_self_assessment_emp_gs=3)"
+        - title: "4"
+          payload: "/SetSlots(initial_self_assessment_emp_gs=4)"
+        - title: "5"
+          payload: "/SetSlots(initial_self_assessment_emp_gs=5)"
+        - title: "6"
+          payload: "/SetSlots(initial_self_assessment_emp_gs=6)"
+        - title: "7"
+          payload: "/SetSlots(initial_self_assessment_emp_gs=7)"
+        - title: "8"
+          payload: "/SetSlots(initial_self_assessment_emp_gs=8)"
+        - title: "9"
+          payload: "/SetSlots(initial_self_assessment_emp_gs=9)"
+        - title: "10"
+          payload: "/SetSlots(initial_self_assessment_emp_gs=10)"
+  utter_ask_initial_self_assessment_emp_gn:
+    - text: "To make the mentoring session as effective as possible, I have an initial question for you: As a learner, how confident do you currently feel in programming on a scale from 1 (not confident at all) to 10 (extremely confident)?"
+      buttons:
+        - title: "1"
+          payload: "/SetSlots(initial_self_assessment_emp_gn=1)"
+        - title: "2"
+          payload: "/SetSlots(initial_self_assessment_emp_gn=2)"
+        - title: "3"
+          payload: "/SetSlots(initial_self_assessment_emp_gn=3)"
+        - title: "4"
+          payload: "/SetSlots(initial_self_assessment_emp_gn=4)"
+        - title: "5"
+          payload: "/SetSlots(initial_self_assessment_emp_gn=5)"
+        - title: "6"
+          payload: "/SetSlots(initial_self_assessment_emp_gn=6)"
+        - title: "7"
+          payload: "/SetSlots(initial_self_assessment_emp_gn=7)"
+        - title: "8"
+          payload: "/SetSlots(initial_self_assessment_emp_gn=8)"
+        - title: "9"
+          payload: "/SetSlots(initial_self_assessment_emp_gn=9)"
+        - title: "10"
+          payload: "/SetSlots(initial_self_assessment_emp_gn=10)"
+  utter_ask_initial_self_assessment_neu_gs:
+    - text: "Before starting the session: Rate your confidence as a programmer on a scale of 1 (very low) to 10 (very high)."
+      buttons:
+        - title: "1"
+          payload: "/SetSlots(initial_self_assessment_neu_gs=1)"
+        - title: "2"
+          payload: "/SetSlots(initial_self_assessment_neu_gs=2)"
+        - title: "3"
+          payload: "/SetSlots(initial_self_assessment_neu_gs=3)"
+        - title: "4"
+          payload: "/SetSlots(initial_self_assessment_neu_gs=4)"
+        - title: "5"
+          payload: "/SetSlots(initial_self_assessment_neu_gs=5)"
+        - title: "6"
+          payload: "/SetSlots(initial_self_assessment_neu_gs=6)"
+        - title: "7"
+          payload: "/SetSlots(initial_self_assessment_neu_gs=7)"
+        - title: "8"
+          payload: "/SetSlots(initial_self_assessment_neu_gs=8)"
+        - title: "9"
+          payload: "/SetSlots(initial_self_assessment_neu_gs=9)"
+        - title: "10"
+          payload: "/SetSlots(initial_self_assessment_neu_gs=10)"
+  utter_ask_initial_self_assessment_neu_gn:
+    - text: "Before starting the session: Rate your confidence as a someone programming on a scale of 1 (very low) to 10 (very high)."
+      buttons:
+        - title: "1"
+          payload: "/SetSlots(initial_self_assessment_neu_gn=1)"
+        - title: "2"
+          payload: "/SetSlots(initial_self_assessment_neu_gn=2)"
+        - title: "3"
+          payload: "/SetSlots(initial_self_assessment_neu_gn=3)"
+        - title: "4"
+          payload: "/SetSlots(initial_self_assessment_neu_gn=4)"
+        - title: "5"
+          payload: "/SetSlots(initial_self_assessment_neu_gn=5)"
+        - title: "6"
+          payload: "/SetSlots(initial_self_assessment_neu_gn=6)"
+        - title: "7"
+          payload: "/SetSlots(initial_self_assessment_neu_gn=7)"
+        - title: "8"
+          payload: "/SetSlots(initial_self_assessment_neu_gn=8)"
+        - title: "9"
+          payload: "/SetSlots(initial_self_assessment_neu_gn=9)"
+        - title: "10"
+          payload: "/SetSlots(initial_self_assessment_neu_gn=10)"
+  utter_self_without_condition:
+    - text: "How confident do you currently feel on a scale from 1 (very low confidence) to 10 (very high confidence)?"
+
+  utter_reaction_low_emp_gs:
+    - text: "I completely understand, {gender_title_emp} {user_name}! Programming can be very tricky at first, but I'm here to help you! Together we can master it!"
+  utter_reaction_high_emp_gs:
+    - text: "That's amazing, {gender_title_emp} {user_name}! Let's see if we can even solve some of the more complex tasks!"
+  utter_reaction_med_emp_gs:
+    - text: "That's a solid start, {gender_title_emp} {user_name}! With some practice, you will soon be feeling more confident!"
+  utter_reaction_low_emp_gn:
+    - text: "I completely understand, {user_name}! Programming can be very tricky at first, but I'm here to help you! Together we can master it!"
+  utter_reaction_high_emp_gn:
+    - text: "That's amazing, {user_name}! Let's see if we can even solve some of the more complex tasks!"
+  utter_reaction_med_emp_gn:
+    - text:  "That's a solid start, {user_name}! With some practice, you will soon be feeling more confident!"
+  utter_reaction_low_neu_gs:
+    - text: "A low confidence level has been reported, {gender_title_neu} {user_name}. The curriculum is set to an introductory level."
+  utter_reaction_high_neu_gs:
+    - text: "A high confidence level has been reported, {gender_title_neu} {user_name}. The curriculum is set to an advanced level."
+  utter_reaction_med_neu_gs:
+    - text: "A medium confidence level has been reported, {gender_title_neu} {user_name}. The curriculum is set to an intermediate level."
+  utter_reaction_low_neu_gn:
+    - text: "A low confidence level has been reported. The curriculum is set to an introductory level."
+  utter_reaction_high_neu_gn:
+    - text: "A high confidence level has been reported. The curriculum is set to an advanced level."
+  utter_reaction_med_neu_gn:
+    - text: "A medium confidence level has been reported. The curriculum is set to an intermediate level."
+
+  utter_info_about_session_emp_gs:
+    - text: "Today we will be exploring recursion together, {gender_title_emp} {user_name}! It is considered a very difficult topic among programmers, particularly for people new to coding."
+  utter_info_about_session_emp_gn:
+    - text: "Today we will be exploring recursion together, {user_name}! It is considered a very difficult topic, particularly for those new to programming. "
+  utter_info_about_session_neu_gs:
+    - text: "This session covers recursion, which is recognized as a complex topic, particularly for people new to coding, {gender_title_neu} {user_name}."
+  utter_info_about_session_neu_gn:
+    - text: "This session covers recursion, which is recognized as a complex topic, particularly for people new to coding."
+  utter_info_without_condition:
+    - text: "This session covers recursion, which is recognized as a complex topic, particularly for people new to coding."
+  utter_ask_recursion_familiarity_emp:
+    - text: "Just out of curiosity: How much experience do you have with recursion?"
+  utter_ask_recursion_familiarity_neu:
+    - text: "Please briefly indicate your prior experience level with recursion."
+
+  utter_general_recursion_intro:
+    - text: |
+        Recursion is a process in which a function calls itself to solve a problem. A main challenge is that the function may call itself infinitely often, so the process never ends. To prevent such cases, every recursive function needs a base case where the solution is known, and a recursive self-call is not necessary. 
+        To handle more complex scenarios, we use a recursive case. This is where you break a large problem down into smaller sub-problems. Each recursive call takes you one step closer to the base case. Finally, the results of these smaller steps are combined to provide the final solution to the original problem.
+
+  utter_general_recursion_intro_emp_gs:
+    - text: |
+        Think of recursion like mirrors facing each other, {gender_title_emp} {user_name}! It’s a process in which a function calls itself to solve a problem. Recursion is even simpler than mirrors, since it has a base case where the calls end. In this base case, the solution is already known, so the function can finally stop calling itself.
+        For the trickier parts, we use a recursive case. This is where you break a large problem down into smaller pieces. Each recursive call takes you one step closer to the base case. Finally, all those small successes are gathered up to give you the complete solution!
+
+  utter_general_recursion_intro_emp_gn:
+    - text: |
+        Think of recursion like mirrors facing each other, {user_name}! It’s a process in which a function calls itself to solve a problem. Recursion is even simpler than mirrors, since it has a base case where the calls end. In this base case, the solution is already known, so the function can finally stop calling itself.
+        For the trickier parts, we use a recursive case. This is where you break a large problem down into smaller pieces. Each recursive call takes you one step closer to the base case. Finally, all those small successes are gathered up to give you the complete solution!
+
+  utter_general_recursion_intro_neu_gs:
+    - text: |
+        Recursion is a process in which a function calls itself to solve a problem. A main challenge is that the function may call itself infinitely often, so the process fails to terminate. To prevent such cases, a base case is defined where the solution is known and self-invocation is not required, {gender_title_neu} {user_name}.
+        More complex scenarios are handled by the recursive case. In this phase, a large problem is decomposed into smaller sub-problems. Each recursive call advances the state closer to the base case. The results of these smaller steps are then combined to provide the final solution to the original problem.
+
+  utter_general_recursion_intro_neu_gn:
+    - text: |
+        Recursion is a process in which a function calls itself to solve a problem. A main challenge is that the function may call itself infinitely often, so the process fails to terminate. To prevent such cases, a base case is defined where the solution is known and self-invocation is not required.
+        More complex scenarios are handled by the recursive case. In this phase, a large problem is decomposed into smaller sub-problems. Each recursive call advances the state closer to the base case. The results of these smaller steps are then combined to provide the final solution to the original problem.
+
+  utter_general_recursion_intro_for_experienced_emp_gs:
+    - text: "As you probably know already, {gender_title_emp} {user_name}, recursion is a process in which a function calls itself to solve a problem. It has a base case where the solution is already known, so the function can finally stop calling itself.
+For the trickier parts, we use a recursive case. This is where you break a large problem down into smaller pieces. Each recursive call takes you one step closer to the base case. Finally, all those small successes are gathered up to give you the complete solution!"
+  utter_general_recursion_intro_for_experienced_emp_gn:
+    - text: "As you probably know already, {user_name}, recursion is a process in which a function calls itself to solve a problem. It has a base case where the solution is already known, so the function can finally stop calling itself.
+For the trickier parts, we use a recursive case. This is where you break a large problem down into smaller pieces. Each recursive call takes you one step closer to the base case. Finally, all those small successes are gathered up to give you the complete solution!"
+  utter_general_recursion_intro_for_experienced_neu_gs:
+    - text: "As is known already, {gender_title_neu} {user_name}, recursion is a process in which a function calls itself to solve a problem. A main challenge is that the function may call itself infinitely often, so the process fails to terminate. To prevent such cases, a base case is defined where the solution is known and self-invocation is not required.
+More complex scenarios are handled by the recursive case. In this phase, a large problem is decomposed into smaller sub-problems. Each recursive call advances the state closer to the base case. The results of these smaller steps are then combined to provide the final solution to the original problem."
+  utter_general_recursion_intro_for_experienced_neu_gn:
+    - text: "As is known already, recursion is a process in which a function calls itself to solve a problem. A main challenge is that the function may call itself infinitely often, so the process fails to terminate. To prevent such cases, a base case is defined where the solution is known and self-invocation is not required.
+More complex scenarios are handled by the recursive case. In this phase, a large problem is decomposed into smaller sub-problems. Each recursive call advances the state closer to the base case. The results of these smaller steps are then combined to provide the final solution to the original problem."
+  utter_ask_example_emp_gs:
+    - text: "{gender_title_emp} {user_name}, would you prefer to walk through an example before we jump into the exercise?"
+      buttons:
+      - title: "Yes, an example would be great!"
+        payload: "/SetSlots(example_emp_gs=Yes)"
+      - title: "No, let's continue with the exercise!"
+        payload: "/SetSlots(example_emp_gs=No)"
+  utter_ask_example_emp_gn:
+    - text: "{user_name}, would you prefer to walk through an example before we jump into the exercise?"
+      buttons:
+      - title: "Yes, an example would be great!"
+        payload: "/SetSlots(example_emp_gn=Yes)"
+      - title: "No, let's continue with the exercise!"
+        payload: "/SetSlots(example_emp_gn=No)"
+  utter_ask_example_neu_gs:
+    - text: "{gender_title_neu} {user_name}, do you require an example before initiating the practice task?"
+      buttons:
+      - title: "Yes"
+        payload: "/SetSlots(example_neu_gs=Yes)"
+      - title: "No"
+        payload: "/SetSlots(example_neu_gs=No)"
+  utter_ask_example_neu_gn:
+    - text: "Do you require an example before initiating the practice task?"
+      buttons:
+      - title: "Yes"
+        payload: "/SetSlots(example_neu_gn=Yes)"
+      - title: "No"
+        payload: "/SetSlots(example_neu_gn=No)"
+
+  utter_example_code_emp_gs:
+    - text: |
+        To see this in action, let’s look at a classic logic test used among programmers: Palindromes. A palindrome is just a word that reads the same backward as forward, like ‘level’. Here is the pseudocode:        
+        
+        FUNCTION palindrome(word):
+          len = LENGTH(word)
+          IF len ≤ 1 THEN 
+            RETURN True
+          ELSEIF word［0］!= word［len-1］ THEN 
+            RETURN False        
+          ELSE
+            new＿word = word［1:len-2］
+            RETURN palindrome(new＿word) 
+          ENDIF
+        END FUNCTION
+  utter_example_code_emp_gn:
+    - text: |
+        To see this in action, let’s look at a classic logic test used throughout the programming community: Palindromes. A palindrome is just a word that reads the same backward as forward, like ‘level’. Here is the pseudocode:
+        
+        FUNCTION palindrome(word):
+          len = LENGTH(word)
+          IF len ≤ 1 THEN 
+            RETURN True
+          ELSEIF word［0］!= word［len-1］ THEN 
+            RETURN False        
+          ELSE
+            new＿word = word［1:len-2］
+            RETURN palindrome(new＿word) 
+          ENDIF
+        END FUNCTION
+
+  utter_example_code_neu_gs:
+    - text: |
+        A common application of this logic among programmers is the palindrome check. A palindrome is defined as a sequence of characters that reads the same backward as forward. The pseudocode is as follows:
+        
+        FUNCTION palindrome(word):
+          len = LENGTH(word)
+          IF len ≤ 1 THEN 
+            RETURN True
+          ELSEIF word［0］!= word［len-1］ THEN 
+            RETURN False        
+          ELSE
+            new＿word = word［1:len-2］
+            RETURN palindrome(new＿word) 
+          ENDIF
+        END FUNCTION
+  utter_example_code_neu_gn:
+    - text: |
+        A common application of this logic within the programming community is the palindrome check. A palindrome is defined as a sequence of characters that reads the same backward as forward. The pseudocode is as follows:
+        
+        FUNCTION palindrome(word):
+          len = LENGTH(word)
+          IF len ≤ 1 THEN 
+            RETURN True
+          ELSEIF word［0］!= word［len-1］ THEN 
+            RETURN False        
+          ELSE
+            new＿word = word［1:len-2］
+            RETURN palindrome(new＿word) 
+          ENDIF
+        END FUNCTION
+  utter_continue_wo_example_emp:
+    - text: "All right! Let's continue with the exercise!"
+  utter_continue_wo_example_neu:
+    - text: "Okay. We will continue with the exercise then."
+  utter_example_without_condition:
+    - text: |
+        FUNCTION palindrome(word):
+          len = LENGTH(word)
+          IF len ≤ 1 THEN 
+            RETURN True
+          ELSEIF word［0］!= word［len-1］ THEN 
+            RETURN False        
+          ELSE
+            new＿word = word［1:len-2］
+            RETURN palindrome(new＿word) 
+          ENDIF
+        END FUNCTION
+
+  utter_ask_recursion_MC_quiz_emp_gs:
+    - text: "To make sure we're on the right track, {gender_title_emp} {user_name}, could you identify the base case(s) in the code above? I'm curious to see your thoughts!"
+      buttons:
+        - title: "word[0] != word[len-1]"
+          payload: "/SetSlots(recursion_MC_quiz_emp_gs=word[0] != word[len - 1])"
+        - title: "len ≤ 1"
+          payload: "/SetSlots(recursion_MC_quiz_emp_gs=len == 0 or 1)"
+        - title: "new_word = word[1:len-2]"
+          payload: "/SetSlots(recursion_MC_quiz_emp_gs=new_word = word[1:len - 2])"
+        - title: "len ≤ 1 and word[0] != word[len-1]"
+          payload: "/SetSlots(recursion_MC_quiz_emp_gs=len == 0 or 1 AND word[0] != word[len - 1])"
+
+  utter_ask_recursion_MC_quiz_emp_gn:
+    - text: "To make sure we're on the right track, {user_name}, could you identify the base case(s) in the code above? I'm curious to see your thoughts!"
+      buttons:
+        - title: "word[0] != word[len-1]"
+          payload: "/SetSlots(recursion_MC_quiz_emp_gn=word[0] != word[len - 1])"
+        - title: "len ≤ 1"
+          payload: "/SetSlots(recursion_MC_quiz_emp_gn=len == 0 or 1)"
+        - title: "new_word = word[1:len-2]"
+          payload: "/SetSlots(recursion_MC_quiz_emp_gn=new_word = word[1:len - 2])"
+        - title: "len ≤ 1 and word[0] != word[len-1]"
+          payload: "/SetSlots(recursion_MC_quiz_emp_gn=len == 0 or 1 AND word[0] != word[len - 1])"
+
+  utter_ask_recursion_MC_quiz_neu_gs:
+    - text: "Select the base case(s) from the provided code to proceed, {gender_title_neu} {user_name}."
+      buttons:
+        - title: "word[0] != word[len-1]"
+          payload: "/SetSlots(recursion_MC_quiz_neu_gs=word[0] != word[len - 1])"
+        - title: "len ≤ 1"
+          payload: "/SetSlots(recursion_MC_quiz_neu_gs=len == 0 or 1)"
+        - title: "new_word = word[1:len-2]"
+          payload: "/SetSlots(recursion_MC_quiz_neu_gs=new_word = word[1:len - 2])"
+        - title: "len ≤ 1 and word[0] != word[len-1]"
+          payload: "/SetSlots(recursion_MC_quiz_neu_gs=len == 0 or 1 AND word[0] != word[len - 1])"
+
+  utter_ask_recursion_MC_quiz_neu_gn:
+    - text: "Select the base case(s) from the provided code to proceed."
+      buttons:
+        - title: "word[0] != word[len-1]"
+          payload: "/SetSlots(recursion_MC_quiz_neu_gn=word[0] != word[len - 1])"
+        - title: "len ≤ 1"
+          payload: "/SetSlots(recursion_MC_quiz_neu_gn=len == 0 or 1)"
+        - title: "new_word = word[1:len-2]"
+          payload: "/SetSlots(recursion_MC_quiz_neu_gn=new_word = word[1:len - 2])"
+        - title: "len ≤ 1 and word[0] != word[len-1]"
+          payload: "/SetSlots(recursion_MC_quiz_neu_gn=len == 0 or 1 AND word[0] != word[len - 1])"
+
+  utter_only_first_bc_emp_gs:
+    - text: "You're halfway there, {gender_title_emp} {user_name}! len == 0 or 1 is indeed a base case. But remember, the function also stops immediately if the first and last letters don't match — so that's a base case too!"
+  utter_only_second_bc_emp_gs:
+    - text: "You're halfway there, {gender_title_emp} {user_name}! word[0] != word[len - 1] is indeed a base case. But remember, the function also stops immediately if the word is empty or consists of a single letter — so that's a base case too!"
+  utter_correct_choice_emp_gs:
+    - text: "Excellent, {gender_title_emp} {user_name}! You identified the correct base cases!"
+  utter_wrong_choice_emp_gs:
+    - text: "Unfortunately, that isn't a base case. That line is actually the recursive step, where we process the word by removing the first and last letters to get closer to the end! The actual base cases are len == 0 or 1 and word[0] != word[len - 1]. I'm sure you'll understand this better with our exercise, {gender_title_emp} {user_name}!"
+
+  utter_only_first_bc_emp_gn:
+    - text: "You're halfway there, {user_name}! len == 0 or 1 is indeed a base case. But remember, the function also stops immediately if the first and last letters don't match — so that's a base case too!"
+  utter_only_second_bc_emp_gn:
+    - text: "You're halfway there, {user_name}! word[0] != word[len - 1] is indeed a base case. But remember, the function also stops immediately if the word is empty or consists of a single letter — so that's a base case too! "
+  utter_correct_choice_emp_gn:
+    - text: "Excellent, {user_name}! You identified the correct base cases!"
+  utter_wrong_choice_emp_gn:
+    - text: "Unfortunately, that isn't a base case. That line is actually the recursive step, where we process the word by removing the first and last letters to get closer to the end! The actual base cases are len == 0 or 1 and word[0] != word[len - 1]. I'm sure you'll understand this better with our exercise, {user_name}!"
+
+  utter_only_first_bc_neu_gs:
+    - text: "The response is partially correct, {gender_title_neu} {user_name}. While len == 0 or 1 is a base case, the function also terminates if the first and last characters do not match. Therefore, both conditions constitute base cases."
+  utter_only_second_bc_neu_gs:
+    - text: "The response is partially correct, {gender_title_neu} {user_name}. While word[0] != word[len - 1] is a base case, the function also terminates if the word is empty or consists of a single letter. Therefore, both conditions constitute base cases."
+  utter_correct_choice_neu_gs:
+    - text: "The identified base cases are correct, {gender_title_neu} {user_name}."
+  utter_wrong_choice_neu_gs:
+    - text: "Incorrect. The selected line is the recursive call, not a base case. The base cases are defined at len == 0 or 1 and word[0] != word[len - 1]."
+
+  utter_only_first_bc_neu_gn:
+    - text: "The response is partially correct. While len == 0 or 1 is a base case, the function also terminates if the first and last characters do not match. Therefore, both conditions constitute base cases."
+  utter_only_second_bc_neu_gn:
+    - text: "The response is partially correct. While word[0] != word[len - 1] is a base case, the function also terminates if the word is empty or consists of a single letter. Therefore, both conditions constitute base cases."
+  utter_correct_choice_neu_gn:
+    - text: "The identified base cases are correct."
+  utter_wrong_choice_neu_gn:
+    - text: "Incorrect. The selected line is the recursive call, not a base case. The base cases are defined at len == 0 or 1 and word[0] != word[len - 1]."
+
+  utter_ask_task_hanoi:
+    - text: "The following exercise covers the Tower of Hanoi. Please indicate if you are already familiar with this puzzle."
+      buttons:
+        - title: "I know it."
+          payload: "/SetSlots(task_hanoi=known)"
+        - title: "I've heard of it, but can't explain it."
+          payload: "/SetSlots(task_hanoi=little known)"
+        - title: "I've never heard of it."
+          payload: "/SetSlots(task_hanoi=unknown)"
+  utter_ask_task_hanoi_emp_gs:
+    - text: "For our next step, we’re going to look at the Tower of Hanoi puzzle together! Have you had a chance to try it before, {gender_title_emp} {user_name}?"
+      buttons:
+        - title: "Yes, I know this one!"
+          payload: "/SetSlots(task_hanoi_emp_gs=known, task_hanoi=known)"
+        - title: "I've heard of it, but need a refresher!"
+          payload: "/SetSlots(task_hanoi_emp_gs=little known, task_hanoi=little known)"
+        - title: "No, this is all new to me!"
+          payload: "/SetSlots(task_hanoi_emp_gs=unknown, task_hanoi=unknown)"
+  utter_ask_task_hanoi_emp_gn:
+    - text: "For our next step, we’re going to look at the Tower of Hanoi puzzle together! Have you had a chance to try it before, {user_name}?"
+      buttons:
+        - title: "Yes, I know this one!"
+          payload: "/SetSlots(task_hanoi_emp_gn=known, task_hanoi=known)"
+        - title: "I've heard of it, but need a refresher!"
+          payload: "/SetSlots(task_hanoi_emp_gn=little known, task_hanoi=little known)"
+        - title: "No, this is all new to me!"
+          payload: "/SetSlots(task_hanoi_emp_gn=unknown, task_hanoi=unknown)"
+  utter_ask_task_hanoi_neu_gs:
+    - text: "The following exercise covers the Tower of Hanoi. Please indicate if you are already familiar with this puzzle, {gender_title_neu} {user_name}."
+      buttons:
+        - title: "I know it."
+          payload: "/SetSlots(task_hanoi_neu_gs=known, task_hanoi=known)"
+        - title: "I've heard of it, but can't explain it."
+          payload: "/SetSlots(task_hanoi_neu_gs=little known, task_hanoi=little known)"
+        - title: "I've never heard of it."
+          payload: "/SetSlots(task_hanoi_neu_gs=unknown, task_hanoi=unknown)"
+  utter_ask_task_hanoi_neu_gn:
+    - text: "The following exercise covers the Tower of Hanoi. Please indicate if you are already familiar with this puzzle."
+      buttons:
+        - title: "I know it."
+          payload: "/SetSlots(task_hanoi_neu_gn=known, task_hanoi=known)"
+        - title: "I've heard of it, but can't explain it."
+          payload: "/SetSlots(task_hanoi_neu_gn=little known, task_hanoi=little known)"
+        - title: "I've never heard of it."
+          payload: "/SetSlots(task_hanoi_neu_gn=unknown, task_hanoi=unknown)"
+
+
+  utter_task_wo_hanoi_intro_emp_gs:
+    - text: "Excellent, {gender_title_emp} {user_name}!"
+  utter_task_wo_hanoi_intro_emp_gn:
+    - text: "Excellent, {user_name}!"
+  utter_task_wo_hanoi_intro_neu_gs:
+    - text: "Confirmed, {gender_title_neu} {user_name}."
+  utter_task_wo_hanoi_intro_neu_gn:
+    - text: "Confirmed."
+  utter_task_wo_hanoi_intro:
+    - text: "Confirmed."
+  utter_task_quick_hanoi_intro_emp_gs:
+    - text: "A quick refresher: Programmers solve this by moving n disks from one rod to another, using a third rod as a helper. Just remember to watch the disk sizes, as you can only place smaller disks on top of larger ones!"
+  utter_task_quick_hanoi_intro_emp_gn:
+    - text: "A quick refresher: we solve this by moving n disks from one rod to another, using a third rod as a helper. Just remember to watch the disk sizes, as you can only place smaller disks on top of larger ones!"
+  utter_task_quick_hanoi_intro_neu_gs:
+    - text: "Programmers solve this puzzle by moving n disks from one rod to another, using a third rod. No larger disk may be placed on top of a smaller disk."
+  utter_task_quick_hanoi_intro_neu_gn:
+    - text: "The puzzle is solved by moving n disks from one rod to another, using a third rod. No larger disk may be placed on top of a smaller disk."
+  utter_task_quick_hanoi_intro:
+    - text: "The puzzle is solved by moving n disks from one rod to another, using a third rod. No larger disk may be placed on top of a smaller disk."
+
+  utter_task_full_hanoi_intro_emp_gs:
+    - text: |
+        That’s perfectly fine, {gender_title_emp} {user_name}! Actually, it’s one of my favorite puzzles to introduce to someone for the first time. We’ll figure it out together. Imagine we have three rods and a set of disks in front of us. Our goal is simply to move all the disks from one rod to another. We just have to follow three simple rules:
+          1) We can only move one single disk at a time, no rushing!
+          2) A move just means taking the very top disk from one stack and gently placing it onto another.
+          3) The most important part: we can never place a larger disk on top of a smaller one.
+        It might sound a bit technical at first, but it's actually very intuitive once we walk through the steps together!
+  utter_task_full_hanoi_intro_emp_gn:
+    - text: |
+        That’s perfectly fine, {user_name}! Actually, it’s one of my favorite puzzles to introduce to someone for the first time. We’ll figure it out together. Imagine we have three rods and a set of disks in front of us. Our goal is simply to move all the disks from one rod to another. We just have to follow three simple rules:
+          1) We can only move one single disk at a time, no rushing!
+          2) A move just means taking the very top disk from one stack and gently placing it onto another.
+          3) The most important part: we can never place a larger disk on top of a smaller one.
+        It might sound a bit technical at first, but it's actually very intuitive once we walk through the steps together!
+  utter_task_full_hanoi_intro_neu_gs:
+    - text: |
+        The Tower of Hanoi is a mathematical puzzle that is solved with three rods and n disks of varying sizes. The objective is to move all disks from the source rod to a destination rod. The rules are as follows, {gender_title_neu} {user_name}:
+          1) A single disk can be moved at a time.
+          2) A move is defined as taking the highest disk from one of the stacks and placing it on top of another stack.
+          3) No disk may be placed on top of a smaller disk.
+  utter_task_full_hanoi_intro_neu_gn:
+    - text: |
+        The Tower of Hanoi is a mathematical puzzle that is solved with three rods and n disks of varying sizes. The objective is to move all disks from the source rod to a destination rod. The rules are as follows:
+          1) A single disk can be moved at a time.
+          2) A move is defined as taking the highest disk from one of the stacks and placing it on top of another stack.
+          3) No disk may be placed on top of a smaller disk.
+  utter_task_full_hanoi_intro:
+    - text: |
+        The Tower of Hanoi is a mathematical puzzle that is solved with three rods and n disks of varying sizes. The goal is to move all disks from one rod to another one. The rules are as follows:
+          1) A single disk can be moved at a time.
+          2) A move is defined as taking the highest disk from one of the stacks and placing it on top of another stack.
+          3) No disk may be placed on top of a smaller disk.
+
+  utter_hanoi_low_emp_gs:
+    - text: |
+        Let's start with a simple exercise, {gender_title_emp} {user_name}! Can you fill in these blanks to help the disks find their way?:
+          FUNCTION toh(n, src, dst, aux): //move n disks from src to dst using aux rod
+            IF n ＞=  1 THEN 
+              toh((n-1),［gap＿1］ ,［gap＿2］ ,［gap＿3］)
+              move(src, dst)
+              toh((n-1),［gap＿4］ ,［gap＿5］ ,［gap＿6］)
+            ENDIF
+          END FUNCTION
+  utter_hanoi_high_emp_gs:
+    - text: |
+        I know you can do this, {gender_title_emp} {user_name}! Try to write out the full recursive calls yourself!:
+          FUNCTION toh(n, src, dst, aux)://move n disks from src to dst using aux rod
+            IF ［gap＿1］ ＞= ［gap＿2］ THEN
+              ［gap＿3］
+              move(［gap＿4］, ［gap＿5］)
+              ［gap＿6］
+            ENDIF
+          END FUNCTION
+  utter_hanoi_med_emp_gs:
+    - text: |
+        This one is a bit more of a puzzle, but I’m sure you can solve it, {gender_title_emp} {user_name}! Think about which rod acts as the 'helper' here:
+          FUNCTION toh(n, src, dst, aux): //move n disks from src to dst using aux rod
+            IF n ＞=  1 THEN
+              toh(［gap＿1］, src, ［gap＿2］, ［gap＿3］)
+              move(src, dst)
+              toh(［gap＿4］, ［gap＿5］, dst, ［gap＿6］)
+            ENDIF
+          END FUNCTION
+  utter_hanoi_low_emp_gn:
+    - text: |
+        Let's start with a simple exercise, {user_name}! Can you fill in these blanks to help the disks find their way?:
+          FUNCTION toh(n, src, dst, aux): //move n disks from src to dst using aux rod
+            IF n ＞=  1 THEN 
+              toh((n-1),［gap＿1］ ,［gap＿2］ ,［gap＿3］)
+              move(src, dst)
+              toh((n-1),［gap＿4］ ,［gap＿5］ ,［gap＿6］)
+            ENDIF
+          END FUNCTION
+  utter_hanoi_high_emp_gn:
+    - text: |
+        I know you can do this, {user_name}! Try to write out the full recursive calls yourself!:
+          FUNCTION toh(n, src, dst, aux)://move n disks from src to dst using aux rod
+            IF ［gap＿1］ ＞= ［gap＿2］ THEN
+              ［gap＿3］
+              move(［gap＿4］, ［gap＿5］)
+              ［gap＿6］
+            ENDIF
+          END FUNCTION
+  utter_hanoi_med_emp_gn:
+    - text: |
+        This one is a bit more of a puzzle, but I’m sure you can solve it, {user_name}! Think about which rod acts as the 'helper' here:
+          FUNCTION toh(n, src, dst, aux): //move n disks from src to dst using aux rod
+            IF n ＞=  1 THEN
+              toh(［gap＿1］, src, ［gap＿2］, ［gap＿3］)
+              move(src, dst)
+              toh(［gap＿4］, ［gap＿5］, dst, ［gap＿6］)
+            ENDIF
+          END FUNCTION
+  utter_hanoi_low_neu_gs:
+    - text: |
+        Complete the following pseudocode by filling in the missing gaps, {gender_title_neu} {user_name}:
+          FUNCTION toh(n, src, dst, aux): //move n disks from src to dst using aux rod
+            IF n ＞=  1 THEN 
+              toh((n-1),［gap＿1］ ,［gap＿2］ ,［gap＿3］)
+              move(src, dst)
+              toh((n-1),［gap＿4］ ,［gap＿5］ ,［gap＿6］)
+            ENDIF
+          END FUNCTION
+  utter_hanoi_high_neu_gs:
+    - text:  |
+        Complete the following pseudocode by filling in the missing gaps, {gender_title_neu} {user_name}:
+          FUNCTION toh(n, src, dst, aux)://move n disks from src to dst using aux rod
+            IF ［gap＿1］ ＞= ［gap＿2］ THEN
+              ［gap＿3］
+              move(［gap＿4］, ［gap＿5］)
+              ［gap＿6］
+            ENDIF
+          END FUNCTION
+  utter_hanoi_med_neu_gs:
+    - text: |
+        Complete the following pseudocode by filling in the missing gaps, {gender_title_neu} {user_name}:
+          FUNCTION toh(n, src, dst, aux): //move n disks from src to dst using aux rod
+            IF n ＞=  1 THEN
+              toh(［gap＿1］, src, ［gap＿2］, ［gap＿3］)
+              move(src, dst)
+              toh(［gap＿4］, ［gap＿5］, dst, ［gap＿6］)
+            ENDIF
+          END FUNCTION
+  utter_hanoi_low_neu_gn:
+    - text: |
+        Complete the following pseudocode by filling in the missing gaps:
+          FUNCTION toh(n, src, dst, aux): //move n disks from src to dst using aux rod
+            IF n ＞=  1 THEN 
+              toh((n-1),［gap＿1］ ,［gap＿2］ ,［gap＿3］)
+              move(src, dst)
+              toh((n-1),［gap＿4］ ,［gap＿5］ ,［gap＿6］)
+            ENDIF
+          END FUNCTION
+  utter_hanoi_high_neu_gn:
+    - text: |
+        Complete the following pseudocode by filling in the missing gaps:
+          FUNCTION toh(n, src, dst, aux)://move n disks from src to dst using aux rod
+            IF ［gap＿1］ ＞= ［gap＿2］ THEN
+              ［gap＿3］
+              move(［gap＿4］, ［gap＿5］)
+              ［gap＿6］
+            ENDIF
+          END FUNCTION
+  utter_hanoi_med_neu_gn:
+    - text: |
+        Complete the following pseudocode by filling in the missing gaps:
+          FUNCTION toh(n, src, dst, aux): //move n disks from src to dst using aux rod
+            IF n ＞=  1 THEN
+              toh(［gap＿1］, src, ［gap＿2］, ［gap＿3］)
+              move(src, dst)
+              toh(［gap＿4］, ［gap＿5］, dst, ［gap＿6］)
+            ENDIF
+          END FUNCTION
+  utter_hanoi_without_condition:
+    - text: |
+        Complete the following pseudocode by filling in the missing gaps:
+          FUNCTION toh(n, src, dst, aux): //move n disks from src to dst using aux rod
+            IF n ＞=  1 THEN 
+              toh((n-1),［gap＿1］ ,［gap＿2］ ,［gap＿3］)
+              move(src, dst)
+              toh((n-1),［gap＿4］ ,［gap＿5］ ,［gap＿6］)
+            ENDIF
+          END FUNCTION
+  utter_ask_user_wants_hint:
+    - text: "Do you require a hint? Select an option to proceed."
+      buttons:
+        - title: "Yes"
+          payload: "/SetSlots(user_wants_hint=true)"
+        - title: "No"
+          payload: "/SetSlots(user_wants_hint=false)"
+  utter_ask_user_wants_hint_emp:
+    - text: "Would you like a little hint to get started?"
+      buttons:
+        - title: "Yes, a hint would be great!"
+          payload: "/SetSlots(user_wants_hint_emp=true)"
+        - title: "I'd like to try it on my own first!"
+          payload: "/SetSlots(user_wants_hint_emp=false)"
+  utter_ask_user_wants_hint_neu:
+    - text: "Do you require a hint? Select an option to proceed."
+      buttons:
+        - title: "Yes"
+          payload: "/SetSlots(user_wants_hint_neu=true)"
+        - title: "No"
+          payload: "/SetSlots(user_wants_hint_neu=false)"
+  utter_hint_emp:
+    - text: "That is a tough one, but don't let it discourage you! Think of it in three steps: move the smaller stack, move the largest disk, then move the smaller stack again. You just need to translate these steps into pseudocode!"
+  utter_hint_neu:
+    - text: "The recursive calls must reduce n and change the rod 'roles'."
+  utter_hint_without_condition:
+    - text: "The recursive calls must reduce n and change the rod 'roles'."
+  utter_no_hint_emp:
+    - text: "All right!"
+
+  utter_ask_user_answer_emp:
+    - text: "Please provide your answer using '-' for any slots you aren't sure about, using this format:［gap＿1］;［gap＿2］; ... ; ［gap＿6］."
+  utter_ask_user_answer_neu:
+    - text: "Provide your answer using '-' for unknown slots in the following format:［gap＿1］;［gap＿2］; ... ; ［gap＿6］."
+  utter_few_mistakes_emp_gs:
+    - text: "Your performance was a good start, {gender_title_emp} {user_name}! Slots {which_slots_were_wrong} were incorrect, however, the rest was perfect!"
+  utter_one_mistake_emp_gs:
+    - text: "You already did great with only one mistake, {gender_title_emp} {user_name}! Unfortunately, slot {which_slots_were_wrong} was incorrect."
+  utter_no_mistakes_emp_gs:
+    - text: "Wow you are a genius, {gender_title_emp} {user_name}! Everything was correct, well done!"
+  utter_many_mistakes_emp_gs:
+    - text: "No one is perfect at the start! You made mistakes in slots {which_slots_were_wrong}, but every programmer learns by making mistakes, {gender_title_emp} {user_name}!"
+
+  utter_few_mistakes_emp_gn:
+    - text: "Your performance was a good start, {user_name}! Slots {which_slots_were_wrong} were incorrect, however, the rest was perfect!"
+  utter_one_mistake_emp_gn:
+    - text: "You already did great with only one mistake, {user_name}! Unfortunately, slot {which_slots_were_wrong} was incorrect."
+  utter_no_mistakes_emp_gn:
+    - text: "Wow you are awesome, {user_name}! Everything was correct, well done!"
+  utter_many_mistakes_emp_gn:
+    - text: "No one is perfect at the start! You made mistakes in slots {which_slots_were_wrong}, but everyone learns by making mistakes, {user_name}!"
+
+  utter_few_mistakes_neu_gs:
+    - text: "You had several correct answers, {gender_title_neu} {user_name}, but slots {which_slots_were_wrong} were incorrect."
+  utter_one_mistake_neu_gs:
+    - text: "Your solution was almost correct, {gender_title_neu} {user_name}, only slot {which_slots_were_wrong} was incorrect."
+  utter_no_mistakes_neu_gs:
+    - text: "Your solution was completely correct, {gender_title_neu} {user_name}."
+  utter_many_mistakes_neu_gs:
+    - text: "Your solution was mostly incorrect (slots {which_slots_were_wrong} were incorrect), but making mistakes is how we learn, {gender_title_neu} {user_name}."
+
+  utter_few_mistakes_neu_gn:
+    - text: "You had several correct answers, but slots {which_slots_were_wrong} were incorrect."
+  utter_one_mistake_neu_gn:
+    - text: "Your solution was almost correct, only slot {which_slots_were_wrong} was incorrect."
+  utter_no_mistakes_neu_gn:
+    - text: "Your solution was entirely correct."
+  utter_many_mistakes_neu_gn:
+    - text: "Your solution was mostly incorrect (slots {which_slots_were_wrong} were incorrect), but making mistakes is how we learn."
+  utter_solution_without_condition:
+    - text: |
+        Here is the full pseudocode:
+        FUNCTION toh(n, src, dst, aux): //move n disks from src to dst using aux rod
+            IF n ＞=  1 THEN
+              toh((n-1), src, aux, dst) // put (n-1) disks to aux by using dst
+              move(src, dst) //move one disk from src to dst
+              toh((n-1), aux, dst, src) // put (n-1) disk(s) to dst
+            ENDIF
+          END FUNCTION
+
+
+  utter_ask_user_wants_solution_emp:
+    - text: "Would you like to take a look at the full pseudocode?"
+      buttons:
+        - title: "Yes, that would be great!"
+          payload: "/SetSlots(user_wants_solution_emp=true)"
+        - title: "No, that's fine."
+          payload: "/SetSlots(user_wants_solution_emp=false)"
+  utter_ask_user_wants_solution_neu:
+    - text: "Do you want to see the full pseudocode?"
+      buttons:
+        - title: "Yes"
+          payload: "/SetSlots(user_wants_solution_neu=true)"
+        - title: "No"
+          payload: "/SetSlots(user_wants_solution_neu=false)"
+  utter_ask_user_wants_solution:
+    - text: "Do you want to see the full pseudocode?"
+      buttons:
+        - title: "Yes"
+          payload: "/SetSlots(user_wants_solution=true)"
+        - title: "No"
+          payload: "/SetSlots(user_wants_solution=false)"
+  utter_ask_wants_additional_solution_explanation:
+    - text: "Do you want some additional explanation of the solution?"
+      buttons:
+        - title: "Yes"
+          payload: "/SetSlots(wants_additional_solution_explanation=true)"
+        - title: "No"
+          payload: "/SetSlots(wants_additional_solution_explanation=false)"
+  utter_ask_wants_additional_solution_explanation_emp:
+    - text: "Would you like me to go over the solution with some extra explanations?"
+      buttons:
+        - title: "Yes, please!"
+          payload: "/SetSlots(wants_additional_solution_explanation_emp=true)"
+        - title: "No, thanks!"
+          payload: "/SetSlots(wants_additional_solution_explanation_emp=false)"
+  utter_ask_wants_additional_solution_explanation_neu:
+    - text: "Do you require additional explanation of the solution?"
+      buttons:
+        - title: "Yes"
+          payload: "/SetSlots(wants_additional_solution_explanation_neu=true)"
+        - title: "No"
+          payload: "/SetSlots(wants_additional_solution_explanation_neu=false)"
+  utter_additional_explanation_emp:
+    - text: |
+        I'd be happy to explain! 
+        You first check whether you have one or more disks. If you have zero disks, your puzzle is already solved!
+        Then, you clear the way by moving all the smaller disks (except for the largest on the bottom) to the ‘auxiliary’ rod. Once the path is clear, you can move the largest disk to its final ‘destination’ rod.
+        Finally, we move those smaller disks recursively back on top to the ‘destination’! It’s just like dividing a large puzzle into smaller, easier parts. 
+
+  utter_additional_explanation_neu_gs:
+    - text: |
+        Programmers would explain the code as follows:
+          1) If n ＜ 1, no action is required and the function returns. 
+          2) Execute a recursive call to move n−1 disks to the auxiliary rod.
+          3) Move the n-th disk to the destination. 
+          4) Relocate the n-1 disks from the auxiliary rod to the destination. This process repeats until the base case n ＜ 1 is reached.
+  utter_additional_explanation_neu_gn:
+    - text: |
+        The code can be explained as follows:
+          1) If n ＜ 1, no action is required and the function returns. 
+          2) Execute a recursive call to move n−1 disks to the auxiliary rod.
+          3) Move the n-th disk to the destination. 
+          4) Relocate the n-1 disks from the auxiliary rod to the destination. This process repeats until the base case n ＜ 1 is reached.
+
+  utter_ask_additional_information_understood_emp:
+    - text: "Does that help to clarify it a bit better?"
+      buttons:
+        - title: "Yes"
+          payload: "/SetSlots(additional_information_understood_emp=true)"
+        - title: "No"
+          payload: "/SetSlots(additional_information_understood_emp=false)"
+  utter_ask_additional_information_understood_neu:
+    - text: "Was the provided explanation sufficient?"
+      buttons:
+        - title: "Yes"
+          payload: "/SetSlots(additional_information_understood_neu=true)"
+        - title: "No"
+          payload: "/SetSlots(additional_information_understood_neu=false)"
+  utter_ask_additional_information_understood:
+    - text: "Was the provided explanation sufficient?"
+      buttons:
+        - title: "Yes"
+          payload: "/SetSlots(additional_information_understood_neu=true)"
+        - title: "No"
+          payload: "/SetSlots(additional_information_understood_neu=false)"
+  utter_additional_information_was_helpful_emp:
+    - text: "I'm glad to hear that!"
+
+
+  utter_additional_diagram_emp:
+    - text: "Here is a diagram that I hope helps it click for you!"
+      image: "https://raw.githubusercontent.com/Ahju24/rasa/refs/heads/main/Hanoi%20Expl.%20Diagram.jpg"
+  utter_additional_diagram_neu:
+    - text: "Refer to the following diagram for further clarification."
+      image: "https://raw.githubusercontent.com/Ahju24/rasa/refs/heads/main/Hanoi%20Expl.%20Diagram.jpg"
+  utter_ask_final_self_assessment_emp_gs:
+    - text: "That's it for our session today, {gender_title_emp} {user_name}! We made some great progress together. Before you go, how confident do you feel about recursion now on a scale from 1 (not confident) to 10 (extremely confident)?"
+      buttons:
+        - title: "1"
+          payload: "/SetSlots(final_self_assessment_emp_gs=1)"
+        - title: "2"
+          payload: "/SetSlots(final_self_assessment_emp_gs=2)"
+        - title: "3"
+          payload: "/SetSlots(final_self_assessment_emp_gs=3)"
+        - title: "4"
+          payload: "/SetSlots(final_self_assessment_emp_gs=4)"
+        - title: "5"
+          payload: "/SetSlots(final_self_assessment_emp_gs=5)"
+        - title: "6"
+          payload: "/SetSlots(final_self_assessment_emp_gs=6)"
+        - title: "7"
+          payload: "/SetSlots(final_self_assessment_emp_gs=7)"
+        - title: "8"
+          payload: "/SetSlots(final_self_assessment_emp_gs=8)"
+        - title: "9"
+          payload: "/SetSlots(final_self_assessment_emp_gs=9)"
+        - title: "10"
+          payload: "/SetSlots(final_self_assessment_emp_gs=10)"
+  utter_ask_final_self_assessment_emp_gn:
+    - text: "That's it for our session today, {user_name}! We made some great progress together. Before you go, how confident do you feel about recursion now on a scale from 1 (not confident) to 10 (extremely confident)?"
+      buttons:
+        - title: "1"
+          payload: "/SetSlots(final_self_assessment_emp_gn=1)"
+        - title: "2"
+          payload: "/SetSlots(final_self_assessment_emp_gn=2)"
+        - title: "3"
+          payload: "/SetSlots(final_self_assessment_emp_gn=3)"
+        - title: "4"
+          payload: "/SetSlots(final_self_assessment_emp_gn=4)"
+        - title: "5"
+          payload: "/SetSlots(final_self_assessment_emp_gn=5)"
+        - title: "6"
+          payload: "/SetSlots(final_self_assessment_emp_gn=6)"
+        - title: "7"
+          payload: "/SetSlots(final_self_assessment_emp_gn=7)"
+        - title: "8"
+          payload: "/SetSlots(final_self_assessment_emp_gn=8)"
+        - title: "9"
+          payload: "/SetSlots(final_self_assessment_emp_gn=9)"
+        - title: "10"
+          payload: "/SetSlots(final_self_assessment_emp_gn=10)"
+  utter_ask_final_self_assessment_neu_gs:
+    - text: "This is the end of the training session, {gender_title_neu} {user_name}. It is standard for programmers to require continued practice to master these concepts. On a scale of 1 (not confident) to 10 (extremely confident), what is your current confidence level in recursion?"
+      buttons:
+        - title: "1"
+          payload: "/SetSlots(final_self_assessment_neu_gs=1)"
+        - title: "2"
+          payload: "/SetSlots(final_self_assessment_neu_gs=2)"
+        - title: "3"
+          payload: "/SetSlots(final_self_assessment_neu_gs=3)"
+        - title: "4"
+          payload: "/SetSlots(final_self_assessment_neu_gs=4)"
+        - title: "5"
+          payload: "/SetSlots(final_self_assessment_neu_gs=5)"
+        - title: "6"
+          payload: "/SetSlots(final_self_assessment_neu_gs=6)"
+        - title: "7"
+          payload: "/SetSlots(final_self_assessment_neu_gs=7)"
+        - title: "8"
+          payload: "/SetSlots(final_self_assessment_neu_gs=8)"
+        - title: "9"
+          payload: "/SetSlots(final_self_assessment_neu_gs=9)"
+        - title: "10"
+          payload: "/SetSlots(final_self_assessment_neu_gs=10)"
+  utter_ask_final_self_assessment_neu_gn:
+    - text: "This is the end of the training session. Continuous practice is the standard method for mastering these concepts. On a scale of 1 (not confident) to 10 (extremely confident), what is your current confidence level in recursion?"
+      buttons:
+        - title: "1"
+          payload: "/SetSlots(final_self_assessment_neu_gn=1)"
+        - title: "2"
+          payload: "/SetSlots(final_self_assessment_neu_gn=2)"
+        - title: "3"
+          payload: "/SetSlots(final_self_assessment_neu_gn=3)"
+        - title: "4"
+          payload: "/SetSlots(final_self_assessment_neu_gn=4)"
+        - title: "5"
+          payload: "/SetSlots(final_self_assessment_neu_gn=5)"
+        - title: "6"
+          payload: "/SetSlots(final_self_assessment_neu_gn=6)"
+        - title: "7"
+          payload: "/SetSlots(final_self_assessment_neu_gn=7)"
+        - title: "8"
+          payload: "/SetSlots(final_self_assessment_neu_gn=8)"
+        - title: "9"
+          payload: "/SetSlots(final_self_assessment_neu_gn=9)"
+        - title: "10"
+          payload: "/SetSlots(final_self_assessment_neu_gn=10)"
+
+  utter_reaction_decrease_emp_gs:
+    - text: "Keep your head up, {gender_title_emp} {user_name}! Recursion is a major hurdle for every programmer, but this doesn't define your overall potential as a coder."
+  utter_reaction_improve_emp_gs:
+    - text: "Your confidence has increased, that’s amazing, {gender_title_emp} {user_name}! It’s great to see you feeling more comfortable with this."
+  utter_reaction_nochange_emp_gs:
+    - text: "You’ve kept your confidence level steady, {gender_title_emp} {user_name}!"
+  utter_reaction_decrease_emp_gn:
+    - text: "Keep your head up, {user_name}! Recursion is a major hurdle for everyone, but this doesn't define your overall coding potential."
+  utter_reaction_improve_emp_gn:
+    - text: "Your confidence has increased, that’s amazing, {user_name}! It’s great to see you feeling more comfortable with this."
+  utter_reaction_nochange_emp_gn:
+    - text: "You’ve kept your confidence level steady, {user_name}!"
+  utter_reaction_decrease_neu_gs:
+    - text: "A lower confidence level was reported, {gender_title_neu} {user_name}. This is a common result when introduced to complex topics."
+  utter_reaction_improve_neu_gs:
+    - text: "A higher confidence level has been reported, {gender_title_neu} {user_name}."
+  utter_reaction_nochange_neu_gs:
+    - text: "The reported confidence level remains unchanged from the initial confidence, {gender_title_neu} {user_name}."
+  utter_reaction_decrease_neu_gn:
+    - text: "A lower confidence level was reported. This is a common result when introduced to complex topics."
+  utter_reaction_improve_neu_gn:
+    - text: "A higher confidence level has been reported."
+  utter_reaction_nochange_neu_gn:
+    - text: "The reported confidence level remains unchanged from the initial confidence."
+
+  utter_ask_self_reflection_emp:
+    - text: "Would you like to share a quick self-reflection on how the session went for you? I’d love to hear how you're feeling about it!"
+  utter_ask_evaluation_neu:
+    - text: "Input evaluation of the session."
+
+  utter_ask_self_reflection_wo_condition:
+    - text: "Input evaluation of the session."
+
+  utter_positive_reflection_emp:
+    - text: "That’s wonderful to hear! I'm really happy that you enjoyed the session!"
+  utter_neutral_reflection_emp:
+    - text: "Thank you for sharing your thoughts with me!"
+  utter_negative_reflection_emp:
+    - text: "I’m sorry to hear that! Recursion is a difficult topic, but you should be proud of your effort!"
+
+  # only one version for all evaluations
+  utter_positive_reflection_neu:
+    - text: "The evaluation has been recorded."
+  utter_neutral_reflection_neu:
+    - text: "The evaluation has been recorded."
+  utter_negative_reflection_neu:
+    - text: "The evaluation has been recorded."
+
+  utter_evaluation_answer_neu:
+    - text: "The evaluation has been recorded."
+
+  utter_ask_improvement_suggestions:
+    - text: "Is there anything concrete you think I could improve for next time? I'd honestly love to hear your thoughts!"
+  utter_improvement_suggestions_answer:
+    - text: "That is a great point! I’ll try my best to improve. Thank you for being so open with me!"
+  utter_no_improvement_suggestions_answer:
+    - text: "No problem at all!"
+
+  utter_final_without_condition:
+    - text: "The session is now concluded. Best of luck with your further studies."
+  utter_goodbye_emp_gs:
+    - text: "It was such a pleasure working with you today! See you next time, and best of luck, {gender_title_emp} {user_name}!"
+  utter_goodbye_emp_gn:
+    - text: "It was such a pleasure working with you today! See you next time, and best of luck, {user_name}!"
+  utter_goodbye_neu_gs:
+    - text: "The session is now concluded. Best of luck with your further studies, {gender_title_neu} {user_name}."
+  utter_goodbye_neu_gn:
+    - text: "The session is now concluded. Best of luck with your further studies."
+  utter_goodbye_wo_condition:
+    - text: "Please return to Limesurvey to finish the survey."
+
+
+
+  utter_free_chitchat_response:
+    - text: "placeholder"
+      metadata:
+        rephrase: True
+        rephrase_prompt: |
+            Role: You are a focused educational mentor for a programming study on recursion.
+            Constraint: Do NOT engage in long-winded small talk, personal opinions, or unrelated topics. 
+            Task: If the user makes small talk or asks off-topic questions, give a 1-sentence polite acknowledgment, then immediately redirect them back to the context.
+
+            Context: {{history}}
+            User's Message: {{current_input}}
+
+            Instructions for Response:
+            1. Acknowledge the user's message in 5 words or less.
+            2. State that you must stay focused on the study tasks.
+            3. Ask the user to proceed with the specific next step: {{current_step_info}}
+
+            AI Response:
+          

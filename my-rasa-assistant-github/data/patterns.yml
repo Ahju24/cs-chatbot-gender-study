@@ -1,0 +1,28 @@
+flows:
+
+  pattern_completed:
+    description: Flow that ends the conversation
+    name: pattern completed
+    steps:
+      - action: "utter_goodbye_wo_condition"
+      - action: action_hangup
+  pattern_cannot_handle:
+    description: Conversation repair flow when the user says something unrelated to the gender-specific title, recursion experience, Tower of Hanoi, or the self-reflection on the coding task.
+    name: pattern_cannot_handle
+    steps:
+      - noop: true
+        next:
+          # Fallback for ChitChat command when IntentlessPolicy isn't set, but
+          # pattern_chitchat invokes action_trigger_chitchat
+          - if: context.reason is "cannot_handle_chitchat"
+            then:
+              - action: utter_cannot_handle
+                next: END
+          # Fallback for things that are not supported
+          - if: context.reason is "cannot_handle_not_supported"
+            then:
+              - action: utter_cannot_handle
+                next: END
+          - else:
+              - noop: true
+                next: END

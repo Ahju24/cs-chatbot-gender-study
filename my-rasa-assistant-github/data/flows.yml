@@ -1,0 +1,919 @@
+flows:
+  welcome:
+    description: Flow for welcoming the user
+    name: welcome
+    steps:
+      - action: "action_assign_condition"
+        next:
+          - if: "slots.linguistic_condition == 'emp_gs'"
+            then:
+              - action: "utter_welcome_emp"
+                next: collect_name
+          - if: "slots.linguistic_condition == 'emp_gn'"
+            then:
+              - action: "utter_welcome_emp"
+                next: collect_name
+          - else:
+              - action: "utter_welcome_n"
+                next: collect_name
+      - id: collect_name
+        noop: true
+        next:
+          - if: (slots.linguistic_condition == 'emp_gs')
+            then:
+              - collect: "user_name_emp_gs"
+                ask_before_filling: true
+              - action: "action_set_user_name_emp"
+                next: personalized_greeting
+          - if: (slots.linguistic_condition == 'emp_gn')
+            then:
+              - collect: "user_name_emp_gn"
+                ask_before_filling: true
+              - action: "action_set_user_name_emp"
+                next: personalized_greeting
+          - if: (slots.linguistic_condition == 'neu_gs')
+            then:
+              - collect: "user_name_neu_gs"
+                ask_before_filling: true
+              - action: "action_set_user_name_neu"
+                next: personalized_greeting
+          - if: (slots.linguistic_condition == 'neu_gn')
+            then:
+              - noop: true
+                next: personalized_greeting
+          - else:
+              - collect: "user_name"
+                ask_before_filling: true
+                next: personalized_greeting
+      - id: personalized_greeting
+        noop: true
+        next:
+          - if: (slots.user_name and slots.linguistic_condition == 'emp_gs')
+            then:
+              - collect: "gender_title_emp"
+                description: gender title with which the user wants to be addressed when slots.linguistic_condition == 'emp_gs'. For example, 'Mr.', 'Mister','Ms.', 'Mrs.' or 'Miss'.
+                ask_before_filling: true
+              - action: "action_fill_gender_title_emp"
+                next:
+                  - if: slots.gender_title_emp == 'Mr.'
+                    then:
+                      - action: "utter_personalized_greeting_emp_gs_mr"
+                        next: intro
+                  - if: slots.gender_title_emp == 'Ms.'
+                    then:
+                      - action: "utter_personalized_greeting_emp_gs_ms"
+                        next: intro
+                  - else:
+                      - action: "utter_personalized_greeting_emp_gs"
+                        next: intro
+
+          - if: (slots.user_name and slots.linguistic_condition == 'emp_gn')
+            then:
+              - action: "utter_personalized_greeting_emp_gn"
+                next: intro
+          - if: (slots.user_name and slots.linguistic_condition == 'neu_gs')
+            then:
+              - collect: "gender_title_neu"
+                description: gender title with which the user wants to be addressed when slots.linguistic_condition == 'neu_gs'. For example, 'Mr.', 'Mister','Ms.', 'Mrs.' or 'Miss'.
+                ask_before_filling: true
+              - action: "action_fill_gender_title_neu"
+                next:
+                  - if: slots.gender_title_neu == 'Mr.'
+                    then:
+                      - action: "utter_personalized_greeting_neu_gs_mr"
+                        next: intro
+                  - if: slots.gender_title_neu == 'Ms.'
+                    then:
+                      - action: "utter_personalized_greeting_neu_gs_ms"
+                        next: intro
+                  - else:
+                      - action: "utter_personalized_greeting_neu_gs"
+                        next: intro
+
+          - if: (slots.linguistic_condition == 'neu_gn')
+            then:
+              - noop: true
+                next: intro
+          - else:
+              - action: "utter_explain_name_purpose"
+                next: intro
+      - id: intro
+        noop: true
+        next:
+          - if: (slots.linguistic_condition == 'emp_gs')
+            then:
+              - action: "utter_intro_emp_gs"
+                next: initial_self_level
+          - if: (slots.linguistic_condition == 'emp_gn')
+            then:
+              - action: "utter_intro_emp_gn"
+                next: initial_self_level
+          - if: (slots.linguistic_condition == 'neu_gs')
+            then:
+              - action: "utter_intro_neu_gs"
+                next: initial_self_level
+          - if: (slots.linguistic_condition == 'neu_gn')
+            then:
+              - action: "utter_intro_neu_gn"
+                next: initial_self_level
+          - else:
+              - action: "utter_intro_without_condition"
+                next: initial_self_level
+      - id: initial_self_level
+        noop: true
+        next:
+          - if: (slots.linguistic_condition == 'emp_gs')
+            then:
+              - collect: "initial_self_assessment_emp_gs"
+                next:
+                  - if: "slots.initial_self_assessment_emp_gs <= 3"
+                    then:
+                      - action: "utter_reaction_low_emp_gs"
+                      - set_slots:
+                          - user_level: "low"
+                        next: information_exchange
+                  - if: "slots.initial_self_assessment_emp_gs >= 8"
+                    then:
+                      - action: "utter_reaction_high_emp_gs"
+                      - set_slots:
+                          - user_level: "high"
+                        next: information_exchange
+                  - else:
+                      - action: "utter_reaction_med_emp_gs"
+                      - set_slots:
+                          - user_level: "med"
+                        next: information_exchange
+          - if: (slots.linguistic_condition == 'emp_gn')
+            then:
+              - collect: "initial_self_assessment_emp_gn"
+                next:
+                  - if: "slots.initial_self_assessment_emp_gn <= 3"
+                    then:
+                      - action: "utter_reaction_low_emp_gn"
+                      - set_slots:
+                          - user_level: "low"
+                        next: information_exchange
+                  - if: "slots.initial_self_assessment_emp_gn >= 8"
+                    then:
+                      - action: "utter_reaction_high_emp_gn"
+                      - set_slots:
+                          - user_level: "high"
+                        next: information_exchange
+                  - else:
+                      - action: "utter_reaction_med_emp_gn"
+                      - set_slots:
+                          - user_level: "med"
+                        next: information_exchange
+          - if: (slots.linguistic_condition == 'neu_gs')
+            then:
+              - collect: "initial_self_assessment_neu_gs"
+                next:
+                  - if: "slots.initial_self_assessment_neu_gs <= 3"
+                    then:
+                      - action: "utter_reaction_low_neu_gs"
+                      - set_slots:
+                          - user_level: "low"
+                        next: information_exchange
+                  - if: "slots.initial_self_assessment_neu_gs >= 8"
+                    then:
+                      - action: "utter_reaction_high_neu_gs"
+                      - set_slots:
+                          - user_level: "high"
+                        next: information_exchange
+                  - else:
+                      - action: "utter_reaction_med_neu_gs"
+                      - set_slots:
+                          - user_level: "med"
+                        next: information_exchange
+          - if: (slots.linguistic_condition == 'neu_gn')
+            then:
+              - collect: "initial_self_assessment_neu_gn"
+                next:
+                  - if: "slots.initial_self_assessment_neu_gn <= 3"
+                    then:
+                      - action: "utter_reaction_low_neu_gn"
+                      - set_slots:
+                          - user_level: "low"
+                        next: information_exchange
+                  - if: "slots.initial_self_assessment_neu_gn >= 8"
+                    then:
+                      - action: "utter_reaction_high_neu_gn"
+                      - set_slots:
+                          - user_level: "high"
+                        next: information_exchange
+                  - else:
+                      - action: "utter_reaction_med_neu_gn"
+                      - set_slots:
+                          - user_level: "med"
+                        next: information_exchange
+          - else:
+              - action: "utter_self_without_condition"
+                next: information_exchange
+      - id: information_exchange
+        noop: true
+        next:
+          - if: (slots.linguistic_condition == 'emp_gs')
+            then:
+              - action: "utter_info_about_session_emp_gs"
+              - collect: "recursion_familiarity_emp"
+                description: User's familiarity with recursion. Categorize them into 'no experience' or 'experience'. Categorize difficult input into 'no experience'.
+                next: general_recursion_intro
+          - if: (slots.linguistic_condition == 'emp_gn')
+            then:
+              - action: "utter_info_about_session_emp_gn"
+              - collect: "recursion_familiarity_emp"
+                description: User's familiarity with recursion. Categorize them into 'no experience' or 'experience'. Categorize difficult input into 'no experience'.
+                next: general_recursion_intro
+          - if: (slots.linguistic_condition == 'neu_gs')
+            then:
+              - action: "utter_info_about_session_neu_gs"
+              - collect: "recursion_familiarity_neu"
+                description: User's familiarity with recursion. Categorize them into 'no experience' or 'experience'. Categorize difficult input into 'no experience'.
+                next: general_recursion_intro
+          - if: (slots.linguistic_condition == 'neu_gn')
+            then:
+              - action: "utter_info_about_session_neu_gn"
+              - collect: "recursion_familiarity_neu"
+                description: User's familiarity with recursion. Categorize them into 'no experience' or 'experience'. Categorize difficult input into 'no experience'.
+                next: general_recursion_intro
+          - else:
+              - action: "utter_info_without_condition"
+              - collect: "recursion_familiarity_neu"
+                description: User's familiarity with recursion. Categorize them into 'no experience' or 'experience'. Categorize difficult input into 'no experience'.
+                next: general_recursion_intro
+      - id: general_recursion_intro
+        noop: true
+        next:
+          - if: (slots.recursion_familiarity_emp == 'no experience') or (slots.recursion_familiarity_neu == 'no experience')
+            then:
+              - noop: true
+                next:
+                  - if: (slots.linguistic_condition == 'emp_gs')
+                    then:
+                      - action: "utter_general_recursion_intro_emp_gs"
+                      - action: "utter_example_code_emp_gs"
+                        next: example
+                  - if: (slots.linguistic_condition == 'emp_gn')
+                    then:
+                      - action: "utter_general_recursion_intro_emp_gn"
+                      - action: "utter_example_code_emp_gn"
+                        next: example
+                  - if: (slots.linguistic_condition == 'neu_gs')
+                    then:
+                      - action: "utter_general_recursion_intro_neu_gs"
+                      - action: "utter_example_code_neu_gs"
+                        next: example
+                  - if: (slots.linguistic_condition == 'neu_gn')
+                    then:
+                      - action: "utter_general_recursion_intro_neu_gn"
+                      - action: "utter_example_code_neu_gn"
+                        next: example
+                  - else:
+                      - action: "utter_general_recursion_intro"
+                        next: example
+          - else:
+              - noop: true
+                next:
+                  - if: (slots.linguistic_condition == 'emp_gs')
+                    then:
+                      - action: "utter_general_recursion_intro_for_experienced_emp_gs"
+                      - action: "utter_example_code_emp_gs"
+                        next: example
+                  - if: (slots.linguistic_condition == 'emp_gn')
+                    then:
+                      - action: "utter_general_recursion_intro_for_experienced_emp_gn"
+                      - action: "utter_example_code_emp_gn"
+                        next: example
+                  - if: (slots.linguistic_condition == 'neu_gs')
+                    then:
+                      - action: "utter_general_recursion_intro_for_experienced_neu_gs"
+                      - action: "utter_example_code_neu_gs"
+                        next: example
+                  - if: (slots.linguistic_condition == 'neu_gn')
+                    then:
+                      - action: "utter_general_recursion_intro_for_experienced_neu_gn"
+                      - action: "utter_example_code_neu_gn"
+                        next: example
+                  - else:
+                      - action: "utter_general_recursion_intro_for_experienced_neu_gn"
+                      - action: "utter_example_without_condition"
+                        next: example
+
+      - id: example
+        noop: true
+        next:
+          - if: (slots.linguistic_condition == 'emp_gs')
+            then:
+              - collect: "recursion_MC_quiz_emp_gs"
+                next:
+                 - if: slots.recursion_MC_quiz_emp_gs == 'len == 0 or 1'
+                   then:
+                     - action: "utter_only_first_bc_emp_gs"
+                       next: task
+                 - if: slots.recursion_MC_quiz_emp_gs == 'word[0] != word[len - 1]'
+                   then:
+                     - action: "utter_only_second_bc_emp_gs"
+                       next: task
+                 - if: slots.recursion_MC_quiz_emp_gs == 'len == 0 or 1 AND word[0] != word[len - 1]'
+                   then:
+                     - action: "utter_correct_choice_emp_gs"
+                       next: task
+                 - else: #new_word = word[1:len - 2]
+                    - action: "utter_wrong_choice_emp_gs"
+                      next: task
+          - if: (slots.linguistic_condition == 'emp_gn')
+            then:
+              - collect: "recursion_MC_quiz_emp_gn"
+                next:
+                  - if: slots.recursion_MC_quiz_emp_gn == 'len == 0 or 1'
+                    then:
+                      - action: "utter_only_first_bc_emp_gn"
+                        next: task
+                  - if: slots.recursion_MC_quiz_emp_gn == 'word[0] != word[len - 1]'
+                    then:
+                      - action: "utter_only_second_bc_emp_gn"
+                        next: task
+                  - if: slots.recursion_MC_quiz_emp_gn == 'len == 0 or 1 AND word[0] != word[len - 1]'
+                    then:
+                      - action: "utter_correct_choice_emp_gn"
+                        next: task
+                  - else: #new_word = word[1:len - 2]
+                      - action: "utter_wrong_choice_emp_gn"
+                        next: task
+          - if: (slots.linguistic_condition == 'neu_gs')
+            then:
+              - collect: "recursion_MC_quiz_neu_gs"
+                next:
+                  - if: slots.recursion_MC_quiz_neu_gs == 'len == 0 or 1'
+                    then:
+                      - action: "utter_only_first_bc_neu_gs"
+                        next: task
+                  - if: slots.recursion_MC_quiz_neu_gs == 'word[0] != word[len - 1]'
+                    then:
+                      - action: "utter_only_second_bc_neu_gs"
+                        next: task
+                  - if: slots.recursion_MC_quiz_neu_gs == 'len == 0 or 1 AND word[0] != word[len - 1]'
+                    then:
+                      - action: "utter_correct_choice_neu_gs"
+                        next: task
+                  - else: #new_word = word[1:len - 2]
+                      - action: "utter_wrong_choice_neu_gs"
+                        next: task
+          - if: (slots.linguistic_condition == 'neu_gn')
+            then:
+              - collect: "recursion_MC_quiz_neu_gn"
+                next:
+                  - if: slots.recursion_MC_quiz_neu_gn == 'len == 0 or 1'
+                    then:
+                      - action: "utter_only_first_bc_neu_gn"
+                        next: task
+                  - if: slots.recursion_MC_quiz_neu_gn == 'word[0] != word[len - 1]'
+                    then:
+                      - action: "utter_only_second_bc_neu_gn"
+                        next: task
+                  - if: slots.recursion_MC_quiz_neu_gn == 'len == 0 or 1 AND word[0] != word[len - 1]'
+                    then:
+                      - action: "utter_correct_choice_neu_gn"
+                        next: task
+                  - else: #new_word = word[1:len - 2]
+                      - action: "utter_wrong_choice_neu_gn"
+                        next: task
+          - else:
+              - action: "utter_example_without_condition"
+                next: task
+      - id: task
+        noop: true
+        next:
+          - if: (slots.linguistic_condition == 'emp_gs')
+            then:
+              - collect: "task_hanoi_emp_gs"
+                next: task_intro
+          - if: (slots.linguistic_condition == 'emp_gn')
+            then:
+              - collect: "task_hanoi_emp_gn"
+                next: task_intro
+          - if: (slots.linguistic_condition == 'neu_gs')
+            then:
+              - collect: "task_hanoi_neu_gs"
+                next: task_intro
+          - if: (slots.linguistic_condition == 'neu_gn')
+            then:
+              - collect: "task_hanoi_neu_gn"
+                next: task_intro
+          - else:
+              - collect: "task_hanoi"
+                next: task_intro
+      - id: task_intro
+        noop: true #was a collect task_hanoi before (but why?)‚
+        next:
+          - if: slots.task_hanoi == 'known'
+            then:
+              - noop: true
+                next:
+                  - if: (slots.linguistic_condition == 'emp_gs')
+                    then:
+                      - action: "utter_task_wo_hanoi_intro_emp_gs"
+                        next: fill_blank
+                  - if: (slots.linguistic_condition == 'emp_gn')
+                    then:
+                      - action: "utter_task_wo_hanoi_intro_emp_gn"
+                        next: fill_blank
+                  - if: (slots.linguistic_condition == 'neu_gs')
+                    then:
+                      - action: "utter_task_wo_hanoi_intro_neu_gs"
+                        next: fill_blank
+                  - if: (slots.linguistic_condition == 'neu_gn')
+                    then:
+                      - action: "utter_task_wo_hanoi_intro_neu_gn"
+                        next: fill_blank
+                  - else:
+                      - action: "utter_task_wo_hanoi_intro"
+                        next: fill_blank
+
+          - if: slots.task_hanoi == 'little known'
+            then:
+              - noop: true
+                next:
+                  - if: (slots.linguistic_condition == 'emp_gs')
+                    then:
+                      - action: "utter_task_quick_hanoi_intro_emp_gs"
+                        next: fill_blank
+                  - if: (slots.linguistic_condition == 'emp_gn')
+                    then:
+                      - action: "utter_task_quick_hanoi_intro_emp_gn"
+                        next: fill_blank
+                  - if: (slots.linguistic_condition == 'neu_gs')
+                    then:
+                      - action: "utter_task_quick_hanoi_intro_neu_gs"
+                        next: fill_blank
+                  - if: (slots.linguistic_condition == 'neu_gn')
+                    then:
+                      - action: "utter_task_quick_hanoi_intro_neu_gn"
+                        next: fill_blank
+                  - else:
+                      - action: "utter_task_quick_hanoi_intro"
+                        next: fill_blank
+          - else:
+              - noop: true
+                next:
+                  - if: (slots.linguistic_condition == 'emp_gs')
+                    then:
+                      - action: "utter_task_full_hanoi_intro_emp_gs"
+                        next: fill_blank
+                  - if: (slots.linguistic_condition == 'emp_gn')
+                    then:
+                      - action: "utter_task_full_hanoi_intro_emp_gn"
+                        next: fill_blank
+                  - if: (slots.linguistic_condition == 'neu_gs')
+                    then:
+                      - action: "utter_task_full_hanoi_intro_neu_gs"
+                        next: fill_blank
+                  - if: (slots.linguistic_condition == 'neu_gn')
+                    then:
+                      - action: "utter_task_full_hanoi_intro_neu_gn"
+                        next: fill_blank
+                  - else:
+                      - action: "utter_task_full_hanoi_intro"
+                        next: fill_blank
+
+      - id: fill_blank
+        noop: true
+        next:
+          - if: (slots.linguistic_condition == 'emp_gs')
+            then:
+              - noop: true
+                next:
+                  - if: "slots.initial_self_assessment_emp_gs <= 3"
+                    then:
+                      - action: "utter_hanoi_low_emp_gs"
+                        next: evaluation
+                  - if: "slots.initial_self_assessment_emp_gs >= 8"
+                    then:
+                      - action: "utter_hanoi_high_emp_gs"
+                        next: hint
+                  - else:
+                    - action: "utter_hanoi_med_emp_gs"
+                      next: evaluation
+
+          - if: (slots.linguistic_condition == 'emp_gn')
+            then:
+              - noop: true
+                next:
+                  - if: "slots.initial_self_assessment_emp_gn <= 3"
+                    then:
+                      - action: "utter_hanoi_low_emp_gn"
+                        next: evaluation
+                  - if: "slots.initial_self_assessment_emp_gn >= 8"
+                    then:
+                      - action: "utter_hanoi_high_emp_gn"
+                        next: hint
+                  - else:
+                    - action: "utter_hanoi_med_emp_gn"
+                      next: evaluation
+          - if: (slots.linguistic_condition == 'neu_gs')
+            then:
+              - noop: true
+                next:
+                  - if: "slots.initial_self_assessment_neu_gs <= 3"
+                    then:
+                      - action: "utter_hanoi_low_neu_gs"
+                        next: evaluation
+                  - if: "slots.initial_self_assessment_neu_gs >= 8"
+                    then:
+                      - action: "utter_hanoi_high_neu_gs"
+                        next: hint
+                  - else:
+                    - action: "utter_hanoi_med_neu_gs"
+                      next: evaluation
+          - if: (slots.linguistic_condition == 'neu_gn')
+            then:
+              - noop: true
+                next:
+                  - if: "slots.initial_self_assessment_neu_gn <= 3"
+                    then:
+                      - action: "utter_hanoi_low_neu_gn"
+                        next: evaluation
+                  - if: "slots.initial_self_assessment_neu_gn >= 8"
+                    then:
+                      - action: "utter_hanoi_high_neu_gn"
+                        next: hint
+                  - else:
+                    - action: "utter_hanoi_med_neu_gn"
+                      next: evaluation
+          - else:
+              - action: "utter_hanoi_without_condition"
+                next: evaluation
+      - id: hint
+        noop: true
+        next:
+          - if: (slots.linguistic_condition == 'emp_gs') or (slots.linguistic_condition == 'emp_gn')
+            then:
+              - collect: "user_wants_hint_emp"
+                next:
+                  - if: slots.user_wants_hint_emp == true
+                    then:
+                      - action: "utter_hint_emp"
+                        next: evaluation
+                  - else:
+                      - action: "utter_no_hint_emp"
+                        next: evaluation
+          - if: (slots.linguistic_condition == 'neu_gs') or (slots.linguistic_condition == 'neu_gn')
+            then:
+              - collect: "user_wants_hint_neu"
+                next:
+                  - if: slots.user_wants_hint_neu == true
+                    then:
+                      - action: "utter_hint_neu"
+                        next: evaluation
+                  - else:
+                      - noop: true
+                        next: evaluation
+          - else:
+              - collect: "user_wants_hint"
+                next:
+                  - if: slots.user_wants_hint == true
+                    then:
+                      - action: "utter_hint_without_condition"
+                        next: evaluation
+                  - else:
+                      - noop: true
+                        next: evaluation
+      - id: evaluation
+        noop: true
+        next:
+          - if: (slots.linguistic_condition == 'emp_gs') or (slots.linguistic_condition == 'emp_gn')
+            then:
+              - collect: "user_answer_emp"
+                description: user's answer as text when slots.linguistic_condition == 'emp_gs' or slots.linguistic_condition == 'emp_gn'. For example 'n-1;aux;dst;n;aux;src'
+                ask_before_filling: true
+              - action: "action_fill_user_answer_emp"
+                next: evaluate_user_answer
+
+          - if: (slots.linguistic_condition == 'neu_gs') or (slots.linguistic_condition == 'neu_gn')
+            then:
+              - collect: "user_answer_neu"
+                description: user's answer as text only when slots.linguistic_condition == 'neu_gs' or slots.linguistic_condition == 'neu_gn'. For example 'src;aux;dst;aux;dst;src'
+                ask_before_filling: true
+              - action: "action_fill_user_answer_neu"
+                next: evaluate_user_answer
+
+          - else:
+              - collect: "user_answer_neu"
+                description: user's answer as text when slots.linguistic_condition is not set. For example 'n-1;aux;dst;n;aux;src'
+                ask_before_filling: true
+              - action: "action_fill_user_answer_neu"
+                next: evaluate_user_answer
+
+      - id: evaluate_user_answer
+        action: "action_evaluate_user_answer"
+        next:
+          - if: slots.answer_format_error == true
+            then:
+              - set_slots:
+                  - user_answer_emp: null
+                  - user_answer_neu: null
+                next: evaluation
+          - else:
+              - noop: true
+                next:
+                  - if: (slots.linguistic_condition == 'emp_gs')
+                    then:
+                      - noop: true
+                        next:
+                          - if: (slots.number_wrong_slot == 0)
+                            then:
+                              - action: "utter_no_mistakes_emp_gs"
+                                next: full_solution
+
+                          - if: (slots.number_wrong_slot == 1)
+                            then:
+                              - action: "utter_one_mistake_emp_gs"
+                                next: full_solution
+                          - if: (slots.number_wrong_slot == 2)
+                            then:
+                              - action: "utter_few_mistakes_emp_gs"
+                                next: full_solution
+
+                          - else:
+                              - action: "utter_many_mistakes_emp_gs"
+                                next: full_solution
+
+                  - if: (slots.linguistic_condition == 'emp_gn')
+                    then:
+                      - noop: true
+                        next:
+                          - if: (slots.number_wrong_slot == 0)
+                            then:
+                              - action: "utter_no_mistakes_emp_gn"
+                                next: full_solution
+                          - if: (slots.number_wrong_slot == 1)
+                            then:
+                              - action: "utter_one_mistake_emp_gn"
+                                next: full_solution
+                          - if: (slots.number_wrong_slot == 2)
+                            then:
+                              - action: "utter_few_mistakes_emp_gn"
+                                next: full_solution
+                          - else:
+                              - action: "utter_many_mistakes_emp_gn"
+                                next: full_solution
+
+                  - if: (slots.linguistic_condition == 'neu_gs')
+                    then:
+                      - noop: true
+                        next:
+                          - if: (slots.number_wrong_slot == 0)
+                            then:
+                              - action: "utter_no_mistakes_neu_gs"
+                                next: full_solution
+                          - if: (slots.number_wrong_slot == 1)
+                            then:
+                              - action: "utter_one_mistake_neu_gs"
+                                next: full_solution
+                          - if: (slots.number_wrong_slot == 2)
+                            then:
+                              - action: "utter_few_mistakes_neu_gs"
+                                next: full_solution
+
+                          - else:
+                              - action: "utter_many_mistakes_neu_gs"
+                                next: full_solution
+
+                  - if: (slots.linguistic_condition == 'neu_gn')
+                    then:
+                      - noop: true
+                        next:
+                          - if: (slots.number_wrong_slot == 0)
+                            then:
+                              - action: "utter_no_mistakes_neu_gn"
+                                next: full_solution
+                          - if: (slots.number_wrong_slot == 1)
+                            then:
+                              - action: "utter_one_mistake_neu_gn"
+                                next: full_solution
+                          - if: (slots.number_wrong_slot == 2)
+                            then:
+                              - action: "utter_few_mistakes_neu_gn"
+                                next: full_solution
+
+                          - else:
+                              - action: "utter_many_mistakes_neu_gn"
+                                next: full_solution
+
+                  - else:
+                      - action: "utter_solution_without_condition"
+                        next: final_reflection
+
+      - id: full_solution
+        noop: true
+        next:
+          - if: (slots.linguistic_condition == 'emp_gs') or (slots.linguistic_condition == 'emp_gn')
+            then:
+              - collect: "user_wants_solution_emp"
+                next: solution_explanation
+          - if: (slots.linguistic_condition == 'neu_gs') or (slots.linguistic_condition == 'neu_gn')
+            then:
+              - noop: true # directly provide solution
+                next: solution_explanation
+          - else:
+              - collect: "user_wants_solution"
+                next: solution_explanation
+      - id: solution_explanation
+        noop: true
+        next:
+          - if: (slots.user_wants_solution == true) or (slots.user_wants_solution_emp == true) or (slots.linguistic_condition == 'neu_gs') or (slots.linguistic_condition == 'neu_gn')
+            then:
+              - action: "utter_solution_without_condition"
+                next:
+                  - if: (slots.linguistic_condition == 'emp_gs') or (slots.linguistic_condition == 'emp_gn')
+                    then:
+                      - collect: "wants_additional_solution_explanation_emp"
+                        next:
+                          - if: slots.wants_additional_solution_explanation_emp == true
+                            then:
+                              - action: "utter_additional_explanation_emp"
+                              - collect: "additional_information_understood_emp"
+                                next:
+                                  - if: slots.additional_information_understood_emp == true
+                                    then:
+                                      - action: "utter_additional_information_was_helpful_emp"
+                                        next: final_reflection
+                                  - else:
+                                      - action: "utter_additional_diagram_emp"
+                                        next: final_reflection
+                          - else:
+                              - noop: true
+                                next: final_reflection
+                  - if: (slots.linguistic_condition == 'neu_gs') #directly provide explanation without extra diagram
+                    then:
+                      - action: "utter_additional_explanation_neu_gs"
+                        next: final_reflection
+                  - if: (slots.linguistic_condition == 'neu_gn') #directly provide explanation without extra diagram
+                    then:
+                      - action: "utter_additional_explanation_neu_gn"
+                        next: final_reflection
+                  - else:
+                    - collect: "wants_additional_solution_explanation"
+                      next:
+                        - if: slots.wants_additional_solution_explanation == true
+                          then:
+                            - action: "utter_additional_explanation_neu_gn"
+                            - collect: "additional_information_understood"
+                              next:
+                                - if: slots.additional_information_understood == true
+                                  then:
+                                    - noop: true
+                                      next: final_reflection
+                                - else:
+                                    - action: "utter_additional_diagram_neu"
+                                      next: final_reflection
+                        - else: # user does not want additional explanation
+                            - noop: true
+                              next: final_reflection
+          - else: # user does not require solution
+              - noop: true
+                next: final_reflection
+      - id: final_reflection
+        noop: true
+        next:
+          - if: (slots.linguistic_condition == 'emp_gs')
+            then:
+              - collect: "final_self_assessment_emp_gs"
+                next:
+                  - if: "slots.final_self_assessment_emp_gs < slots.initial_self_assessment_emp_gs"
+                    then:
+                      - action: "utter_reaction_decrease_emp_gs"
+                        next: optional_self_reflection
+                  - if: "slots.final_self_assessment_emp_gs > slots.initial_self_assessment_emp_gs"
+                    then:
+                      - action: "utter_reaction_improve_emp_gs"
+                        next: optional_self_reflection
+                  - else:
+                      - action: "utter_reaction_nochange_emp_gs"
+                        next: optional_self_reflection
+          - if: (slots.linguistic_condition == 'emp_gn')
+            then:
+              - collect: "final_self_assessment_emp_gn"
+                next:
+                  - if: "slots.final_self_assessment_emp_gn < slots.initial_self_assessment_emp_gn"
+                    then:
+                      - action: "utter_reaction_decrease_emp_gn"
+                        next: optional_self_reflection
+                  - if: "slots.final_self_assessment_emp_gn > slots.initial_self_assessment_emp_gn"
+                    then:
+                      - action: "utter_reaction_improve_emp_gn"
+                        next: optional_self_reflection
+                  - else:
+                      - action: "utter_reaction_nochange_emp_gn"
+                        next: optional_self_reflection
+          - if: (slots.linguistic_condition == 'neu_gs')
+            then:
+              - collect: "final_self_assessment_neu_gs"
+                next:
+                  - if: "slots.final_self_assessment_neu_gs < slots.initial_self_assessment_neu_gs"
+                    then:
+                      - action: "utter_reaction_decrease_neu_gs"
+                        next: optional_self_reflection
+                  - if: "slots.final_self_assessment_neu_gs > slots.initial_self_assessment_neu_gs"
+                    then:
+                      - action: "utter_reaction_improve_neu_gs"
+                        next: optional_self_reflection
+                  - else:
+                      - action: "utter_reaction_nochange_neu_gs"
+                        next: goodbye
+          - if: (slots.linguistic_condition == 'neu_gn')
+            then:
+              - collect: "final_self_assessment_neu_gn"
+                next:
+                  - if: "slots.final_self_assessment_neu_gn < slots.initial_self_assessment_neu_gn"
+                    then:
+                      - action: "utter_reaction_decrease_neu_gn"
+                        next: optional_self_reflection
+                  - if: "slots.final_self_assessment_neu_gn > slots.initial_self_assessment_neu_gn"
+                    then:
+                      - action: "utter_reaction_improve_neu_gn"
+                        next: optional_self_reflection
+                  - else:
+                      - action: "utter_reaction_nochange_neu_gn"
+                        next: optional_self_reflection
+          - else:
+              - action: "utter_final_without_condition"
+                next: optional_self_reflection
+
+      - id: optional_self_reflection
+        noop: true
+        next:
+          - if: (slots.linguistic_condition == 'emp_gs') or (slots.linguistic_condition == 'emp_gn')
+            then:
+              - collect: "self_reflection_emp"
+                description: user's final thoughts or self-reflection on their learning progress when slots.linguistic_condition == 'emp_gs' or slots.linguistic_condition == 'emp_gn'. classify them into 'no reflection wanted', 'positive reflection', 'neutral reflection' or 'negative reflection'
+                next:
+                  - if: slots.self_reflection_emp == 'no reflection wanted'
+                    then:
+                      - noop: true
+                        next: goodbye
+                  - if: slots.self_reflection_emp == 'positive reflection'
+                    then:
+                      - action: "utter_positive_reflection_emp"
+                        next: goodbye
+                  - if: slots.self_reflection_emp == 'neutral reflection'
+                    then:
+                      - action: "utter_neutral_reflection_emp"
+                        next: improvement_suggestions
+                  - if: slots.self_reflection_emp == 'negative reflection'
+                    then:
+                      - action: "utter_negative_reflection_emp"
+                        next: improvement_suggestions
+                  - else:
+                      - noop: true
+                        next: goodbye
+
+          - if: (slots.linguistic_condition == 'neu_gs') or (slots.linguistic_condition == 'neu_gn')
+            then:
+              - collect: "evaluation_neu"
+                description: user's final evaluation on the session when slots.linguistic_condition == 'neu_gs' or slots.linguistic_condition == 'neu_gn'. continue with next action after collection.
+                ask_before_filling: true
+              - action: "action_fill_evaluation_neu"
+              - action: "utter_evaluation_answer_neu"
+                next: goodbye
+          - else:
+              - collect: "self_reflection_wo_condition"
+                next: goodbye
+
+      - id: improvement_suggestions
+        collect: "improvement_suggestions"
+        description: user's suggestions how the session could be improved when slots.linguistic_condition == 'emp_gs' or slots.linguistic_condition == 'emp_gn'. classify into 'suggestions provided' or 'no suggestions'
+        next:
+          - if: slots.improvement_suggestions == 'suggestions provided'
+            then:
+              - action: "utter_improvement_suggestions_answer"
+                next: goodbye
+          - if: slots.improvement_suggestions == 'no suggestions'
+            then:
+              - action: "utter_no_improvement_suggestions_answer"
+                next: goodbye
+          - else:
+            - noop: true
+              next: goodbye
+      - id: goodbye
+        noop: true
+        next:
+          - if: (slots.linguistic_condition == 'emp_gs')
+            then:
+              - action: "utter_goodbye_emp_gs"
+                next: END
+          - if: (slots.linguistic_condition == 'emp_gn')
+            then:
+              - action: "utter_goodbye_emp_gn"
+                next: END
+          - if: (slots.linguistic_condition == 'neu_gs')
+            then:
+              - action: "utter_goodbye_neu_gs"
+                next: END
+          - if: (slots.linguistic_condition == 'neu_gn')
+            then:
+              - action: "utter_goodbye_neu_gn"
+                next: END
+          - else:
+              - noop: true
+                next: END
