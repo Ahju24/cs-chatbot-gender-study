@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Mentoring Session with Coment</title>
+    <!-- Rasa Chat Widget -->
+    <script
+            type="module"
+            src="https://unpkg.com/@rasahq/chat-widget-ui/dist/rasa-chatwidget/rasa-chatwidget.esm.js"
+    ></script>
+    <link
+            rel="stylesheet"
+            href="https://unpkg.com/@rasahq/chat-widget-ui/dist/rasa-chatwidget/rasa-chatwidget.css"
+    />
+    <style>
+        .container {
+        display: flex;
+        flex-direction: row;
+        gap: 40px;
+        padding: 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .info-panel {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .chat-panel {
+        flex: 1.5;
+        min-height: 600px;
+        position: relative;
+      }
+        body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background-color: #f7f9fc;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+        }
+
+        header {
+          background-color: #728494;
+          color: white;
+          width: 100%;
+          padding: 20px 30px;
+          text-align: left;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+          margin: 0;
+          font-size: 28px;
+        }
+
+        main {
+          padding: 30px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        rasa-chatbot-widget {
+        position: relative !important;
+        bottom: auto !important;
+        right: auto !important;
+        width: 100% !important;
+        height: 600px !important;
+      }
+
+      @media (max-width: 800px) {
+        .container { flex-direction: column; }
+        .chat-panel { height: 500px; }
+      }
+
+    </style>
+
+</head>
+
+<body>
+<header>
+    <h1>Mentoring Session with Coment</h1>
+</header>
+<div class="container">
+    <div class="info-panel">
+        <div style="display: flex; align-items: flex-start; margin-bottom: 15px;">
+            <span style="margin-right: 12px; margin-top: 2px; font-size: 1.2rem;">ℹ️</span>
+            <p style="margin: 0; line-height: 1.5; font-size: 15px; color: #333;">
+                For the best experience, please use <strong>clear language</strong> and <strong>provided
+                buttons</strong> when interacting with the chatbot. You can use a nickname instead of your real name. For your own safety, please <strong>don't enter any personal data</strong> in the chat.
+            </p>
+        </div>
+
+        <div style="display: flex; align-items: flex-start; margin-bottom: 15px;">
+            <span style="margin-right: 12px; margin-top: 2px; font-size: 1.2rem;">🕒</span>
+            <p style="margin: 0; line-height: 1.5; font-size: 15px; color: #333;">
+                The initial connection may take a moment to load. Thank you for your patience!
+            </p>
+        </div>
+
+        <div style="display: flex; align-items: flex-start;  margin-bottom: 15px;">
+            <span style="margin-right: 12px; margin-top: 2px; font-size: 1.2rem;">💬</span>
+            <p style="margin: 0; line-height: 1.5; font-size: 15px; color: #333; font-weight: bold;">
+                Please click on the chat icon to the right to start the session!
+            </p>
+        </div>
+
+        <div style="display: flex; align-items: flex-start;">
+            <span style="margin-right: 12px; margin-top: 2px; font-size: 1.2rem;">✨</span>
+            <p style="margin: 0; line-height: 1.5; font-size: 15px; color: #333;">
+                Tip: Switch to full-screen for the best reading experience!
+            </p>
+        </div>
+
+    </div>
+    <div class="chat-panel">
+      <!-- Replace the server-url with your own Rasa assistant url! -->
+        <rasa-chatbot-widget
+                id="my-bot"
+                toggle-full-screen="true"
+                widget-title="Mentoring Session with Coment"
+                rest-enabled="false"
+                server-url="https://assistant-xxxxxxxxxxxx.europe-west3.run.app"
+                initial-payload="/session_start">
+            <style>:root { --color-primary: #42505c; }</style>
+        </rasa-chatbot-widget>
+    </div>
+
+</div>
+</body>
+<script>
+    // Grab params from url
+    const params = new URLSearchParams(window.location.search);
+
+    const widget = document.getElementById('my-bot');
+    
+    // Prepare metadata
+    const metadata = {
+        "condition": params.get('condition') || "1",
+        "user_id": params.get('user_id') || "unknown"
+    };
+        
+    if (widget) {
+        // Set initial payload
+        const payloadString = `/trigger_flow{"flow": "welcome", "metadata": ${JSON.stringify(metadata)}}`;
+        widget.setAttribute('initial-payload', payloadString);
+    }
+</script>
+</html>
